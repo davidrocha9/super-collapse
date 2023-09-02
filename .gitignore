@@ -1,0 +1,32 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+bin/
+out/
+tmp/
+
+# Development files
+*.log
+*.bak
+*.swp
+.DS_Store
+
+# Environment variables
+.env
+
+# Editor-specific files
+.idea/
+.vscode/
+
+# Compiled binary files
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Miscellaneous
+*.DS_Store
+Thumbs.db

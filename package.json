@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "eventemitter3": "^5.0.1",
+    "pixi.js": "^7.2.4",
+    "seedrandom": "^3.0.5"
+  }
+}
