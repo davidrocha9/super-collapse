@@ -1,50 +1,48 @@
 import { PIXEL } from './constants.js';
 
 const app = new PIXI.Application({
-    width: 920 * PIXEL,
-    height: 740 * PIXEL,
-    transparent: false,
-    antialias: true,
+  width: 920 * PIXEL,
+  height: 740 * PIXEL,
+  transparent: false,
+  antialias: true,
 });
-    
-app.renderer.backgroundColor = 0xff9b00;
 
-/*app.renderer.view.style.position = 'absolute';
-app.renderer.view.style.left = '50%';
-app.renderer.view.style.top = '50%';
-app.renderer.view.style.transform = 'translate(-50%, -50%)';*/
+app.renderer.backgroundColor = 0xff9b00;
 
 document.body.appendChild(app.view);
 
-// Create a Graphics object for the rectangle
 const Graphics = PIXI.Graphics;
 
 function createGradientTexture(x1, y1, x2, y2, color1, color2) {
-    const canvas = document.createElement('canvas');
-    canvas.width = app.renderer.width;
-    canvas.height = app.renderer.height;
-    const ctx = canvas.getContext('2d');
+  const canvas = document.createElement('canvas');
+  canvas.width = app.renderer.width;
+  canvas.height = app.renderer.height;
+  const ctx = canvas.getContext('2d');
 
-    // Create a linear gradient from black to white
-    const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
-    gradient.addColorStop(0, color1);
-    gradient.addColorStop(1, color2);
+  const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+  gradient.addColorStop(0, color1);
+  gradient.addColorStop(1, color2);
 
-    // Fill the canvas with the gradient
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    return PIXI.Texture.from(canvas);
+  return PIXI.Texture.from(canvas);
 }
 
-// Create a custom gradient texture
-const gradientTexture = createGradientTexture(app.renderer.width / 2, app.renderer.height, app.renderer.width / 2, 0, '#080808', '#474747');
+const gradientTexture = createGradientTexture(
+  app.renderer.width / 2,
+  app.renderer.height,
+  app.renderer.width / 2,
+  0,
+  '#080808',
+  '#474747'
+);
 
-// Draw the original orange rectangle
 const backgroundGrid = new Graphics();
-backgroundGrid.beginTextureFill({ texture: gradientTexture })
-    .drawRect(10*PIXEL, 40*PIXEL, 480*PIXEL, 640*PIXEL)
-    .endFill();
+backgroundGrid
+  .beginTextureFill({ texture: gradientTexture })
+  .drawRect(10 * PIXEL, 40 * PIXEL, 480 * PIXEL, 640 * PIXEL)
+  .endFill();
 
 app.stage.addChild(backgroundGrid);
 

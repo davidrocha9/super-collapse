@@ -1,4 +1,4 @@
-import { COLORS, rng } from './constants.js';
+import { COLORS, rng } from '../constants.js';
 import { Block } from './Block.js';
 
 export class Grid {
@@ -29,8 +29,6 @@ export class Grid {
     }
 
     draw() {
-        console.log(this.grid)
-
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
                 if (this.grid[y][x] !== null)
@@ -47,46 +45,6 @@ export class Grid {
         }
     }
     
-    collapseBlocks(group) {
-        // Remove the blocks in the group from the grid
-        for (const block of group) {
-            console.log(block.x, block.y)
-            this.grid[block.y][block.x] = null;
-        }
-
-        // Remove the blocks in the group from the PIXI container
-        for (const block of group) {
-            if (block.graphics.parent) {
-                block.graphics.parent.removeChild(block.graphics);
-            }
-        }
-
-        this.draw()
-
-        // Perform the collapse logic
-        /*for (let x = 0; x < this.cols; x++) {
-            const column = [];
-            for (let y = 0; y < this.rows; y++) {
-                if (this.grid[y][x] !== undefined) {
-                    column.push(this.grid[y][x]);
-                }
-            }
-
-            // Fill the column with empty blocks (color 0) at the top to maintain the grid size
-            while (column.length < this.rows) {
-                column.unshift(new Block(x, column.length, 0));
-            }
-
-            // Update the column in the grid
-            for (let y = 0; y < this.rows; y++) {
-                this.grid[y][x] = column[y];
-            }
-        }*/
-
-        //this.draw();
-    }
-    
-
     findAdjacentBlocks(block) {
         const color = block.color;
         const visited = new Set(); // Keep track of visited blocks
@@ -127,4 +85,56 @@ export class Grid {
 
         return group;
     }
+
+    collapseBlocks(group) {
+        for (let block of group) {
+            if (block.graphics.parent) {
+                block.graphics.parent.removeChild(block.graphics);
+                // Optional: You can destroy the graphics object to free up memory
+                block.graphics.destroy();
+                this.grid[block.y][block.x] = null;
+            }
+        }
+
+        for (let x = this.rows - 1; x >= 0; x--) {
+            for (let y = this.cols - 1; y >= 0; y--) {
+                if (this.grid[x][y] == null) {
+                    for (let i = x - 1; i >= 0; i--) {
+                        if (this.grid[i][y] != null) {
+                            console.log(i)
+                            this.grid[i][y].updatePosition(x-i);
+                            this.grid[x][y] = this.grid[i][y];
+                            this.grid[i][y] = null;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        console.log(this.grid)
+    }
+    
+    applyGravity() {
+        for (let x = this.cols - 1; x >= 0; x--) {
+            for (let y = this.rows - 1; y >= 0; y--) {
+                if (y < 15 && this.grid[y][x] !== null) {
+                    if (this.grid[y + 1][x] === null) {
+                        console.log("Block at col " + x + " row " + y + " falls")
+                        let newY = y + 1;
+                        while (newY < 15 && this.grid[newY + 1][x] === null) {
+                            newY++;
+                        }
+                        
+                        this.grid[y][x].updatePosition(newY - y);
+                        this.grid[newY][x] = this.grid[y][x];
+                        this.grid[y][x] = null;
+                        this.grid = this.grid;
+                    }
+                }
+            }
+        }
+        console.log(this.grid)
+    }
+    
 }
