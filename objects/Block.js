@@ -30,7 +30,7 @@ export class Block {
         app.stage.addChild(this.graphics);
     }
 
-    updatePosition(drop) {
+    applyGravity(drop) {
         const newY = this.y + drop;
         
         // Define the animation duration (in milliseconds)
@@ -48,7 +48,31 @@ export class Block {
             } else {
                 // Animation has completed, update the block's position and log the new coordinates
                 this.y = newY;
-                console.log("New coords: " + this.x + ", " + this.y);
+            }
+        };
+    
+        // Start the animation loop
+        animate();
+    }
+    
+    slide(shift) {
+        const newX = this.x + shift;
+        
+        // Define the animation duration (in milliseconds)
+        const animationDuration = 500; // 0.5 seconds
+    
+        // Calculate the amount to move on each frame
+        const deltaX = (newX - this.x) / (animationDuration / 16); // 16ms per frame
+    
+        // Create a function to update the block's position on each frame
+        const animate = () => {
+            if (Math.abs(this.x - newX) > Math.abs(deltaX)) {
+                this.x += deltaX;
+                this.graphics.x += 40 * deltaX * PIXEL;
+                requestAnimationFrame(animate);
+            } else {
+                // Animation has completed, update the block's position and log the new coordinates
+                this.x = newX;
             }
         };
     
