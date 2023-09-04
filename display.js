@@ -1,4 +1,4 @@
-import { PIXEL } from './constants.js';
+import { PIXEL, hudStyle } from './constants.js';
 
 const app = new PIXI.Application({
   width: 920 * PIXEL,
@@ -10,6 +10,8 @@ const app = new PIXI.Application({
 app.renderer.backgroundColor = 0xff9b00;
 
 document.body.appendChild(app.view);
+
+const ticker = PIXI.Ticker;
 
 const Graphics = PIXI.Graphics;
 
@@ -100,18 +102,6 @@ hudLine.lineStyle(4, 0xfcf191, 1)
 
 app.stage.addChild(hudLine);
 
-const hudStyle = new PIXI.TextStyle({
-    dropShadow: true,
-    dropShadowAngle: 0.5,
-    dropShadowBlur: 4,
-    dropShadowDistance: 3,
-    fill: "#ffffff",
-    fontFamily: "Impact, Charcoal, sans-serif",
-    fontSize: 25,
-    stroke: "#e28503",
-    strokeThickness: 2
-});
-
 function writePlaceholder(text, x, y, style, spacing, x_stretch, y_stretch) {
     // iterate string text
     for (let i = 0; i < text.length; i++) {
@@ -153,7 +143,7 @@ linesLeftRect.beginFill(0xffffff)
 
 app.stage.addChild(linesLeftRect);
 
-writePlaceholder('LINES LEFT', 560*PIXEL, 380*PIXEL, hudStyle, 15, 1, 1);
+writePlaceholder('LINES LEFT', 570*PIXEL, 380*PIXEL, hudStyle, 15, 1, 1);
 
 const superStyle = new PIXI.TextStyle({
     dropShadow: true,
@@ -196,4 +186,4 @@ whiteBlock.beginFill(0xffffff)
 //app.stage.addChild(whiteBlock);
 
 // Export the Graphics class
-export { app, Graphics };
+export { app, Graphics, ticker };

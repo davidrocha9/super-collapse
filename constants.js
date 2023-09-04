@@ -10,4 +10,28 @@ const COLORS = {
 const SEED = Date.now().toString();
 var rng = new Math.seedrandom(SEED);
 
-export { PIXEL, COLORS, rng };
+const hudStyle = new PIXI.TextStyle({
+    dropShadow: true,
+    dropShadowAngle: 0.5,
+    dropShadowBlur: 4,
+    dropShadowDistance: 3,
+    fill: "#ffffff",
+    fontFamily: "Impact, Charcoal, sans-serif",
+    fontSize: 25,
+    stroke: "#e28503",
+    strokeThickness: 2
+});
+
+const scoreStyle = new PIXI.TextStyle({
+    dropShadow: true,
+    dropShadowAngle: 0.5,
+    dropShadowBlur: 4,
+    dropShadowDistance: 3,
+    fill: "#ffffff",
+    fontFamily: "Impact, Charcoal, sans-serif",
+    fontSize: 35,
+    stroke: "#e28503",
+    strokeThickness: 2
+});
+
+export { PIXEL, COLORS, rng, hudStyle, scoreStyle };
