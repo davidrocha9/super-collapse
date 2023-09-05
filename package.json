@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "eventemitter3": "^5.0.1",
+    "gsap": "^3.12.2",
     "pixi.js": "^7.2.4",
     "seedrandom": "^3.0.5"
   }

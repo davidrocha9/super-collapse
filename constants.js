@@ -34,4 +34,16 @@ const scoreStyle = new PIXI.TextStyle({
     strokeThickness: 2
 });
 
-export { PIXEL, COLORS, rng, hudStyle, scoreStyle };
+const backToMenuStyle = new PIXI.TextStyle({
+    dropShadow: true,
+    dropShadowAngle: 0.5,
+    dropShadowBlur: 4,
+    dropShadowDistance: 3,
+    fill: "#ffffff",
+    fontFamily: "Impact, Charcoal, sans-serif",
+    fontSize: 25,
+    stroke: "#e28503",
+    strokeThickness: 2
+});
+
+export { PIXEL, COLORS, rng, hudStyle, scoreStyle, backToMenuStyle };

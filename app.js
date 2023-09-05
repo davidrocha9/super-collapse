@@ -1,5 +1,3 @@
-import './display.js'
-import { Game } from './objects/Game.js';
-import { app} from './display.js';
+import { Menu } from './objects/controller/Menu.js';
 
-const game = new Game();
+const menu = new Menu();
