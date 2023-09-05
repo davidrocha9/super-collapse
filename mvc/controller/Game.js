@@ -1,7 +1,3 @@
-import { COLORS, rng, scoreStyle, PIXEL, backToMenuStyle } from '../../constants.js';
-import { Block } from './Block.js';
-import { app, Graphics } from '../../display.js';
-import { UpcomingBlock } from './UpcomingBlock.js';
 import { Grid } from './Grid.js';
 import { GameView } from '../view/GameView.js';
 
@@ -24,6 +20,18 @@ export class Game {
     }
 
     handleBlockClick(group) {
+        let score = 3 + (group.length - 3) * 3;
+
+        this.increaseScore(score);
+
+        if (this.linesLeft <= 0) {
+            if (!this.grid.checkPossibleMoves()){
+                this.win();
+            }
+        }
+    }
+
+    handleBombClick(group) {
         let score = 3 + (group.length - 3) * 3;
 
         this.increaseScore(score);

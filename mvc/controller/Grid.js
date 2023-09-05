@@ -1,13 +1,13 @@
-import { COLORS, rng, scoreStyle, PIXEL } from '../../constants.js';
+import { COLORS, rng, BLACK, PIXEL } from '../../constants.js';
 import { Block } from './Block.js';
-import { app, Graphics } from '../../display.js';
 import { UpcomingBlock } from './UpcomingBlock.js';
 import { GridModel } from '../model/GridModel.js';
 import { GridView } from '../view/GridView.js';
+import { Bomb } from './Bomb.js';
 
 export class Grid {
     constructor(handleBlockClickCallback) {
-        this.model = new GridModel((block) => this.handleClick(block));
+        this.model = new GridModel((element) => this.handleClick(element));
         this.view = new GridView(this.model);
         this.randomBlockList = [];
         this.randomBlockTimer = null;
@@ -35,16 +35,62 @@ export class Grid {
         return this.model;
     }
 
-    handleClick = (block) => {
-        const group = this.findAdjacentBlocks(block);
+    handleClick = (element) => {
+        console.log(element);
 
-        if (group.length > 2) {
-            this.collapseBlocks(group);
+        // check if block or bomb
+        if (element instanceof Block) {
+            console.log("BLOCO")
+            const group = this.findAdjacentBlocks(element);
+
+            if (group.length > 2) {
+                this.collapseBlocks(group);
+                // Call the Callback function in the Game class
+                if (typeof this.handleBlockClickCallback === 'function') {
+                    this.handleBlockClickCallback(group);
+                }
+            }
+        }
+        else if (element instanceof Bomb) {
+            console.log("BOMBA")
+            const group = this.destroyBlocksInRadius(element.getX(), element.getY(), 2);
+            
+            this.checkGravity();
+
+            this.checkEmptyCols();
+
+            console.log(this.model)
+
             // Call the Callback function in the Game class
             if (typeof this.handleBlockClickCallback === 'function') {
                 this.handleBlockClickCallback(group);
             }
         }
+    }
+
+    destroyBlocksInRadius(x, y, radius) {
+        const group = [];
+
+        for (let i = -radius; i <= radius; i++) {
+            for (let j = -radius; j <= radius; j++) {
+                const newX = x + i;
+                const newY = y + j;
+    
+                if (newX >= 0 && newX < this.model.getCols() && newY >= 0 && newY < this.model.getRows()) {
+                    const block = this.model.getBlock(newX, newY);
+                    
+                    if (block != null) {
+                        group.push(block);
+                        block.delete();
+                        this.deleteBlock(block);
+                    }
+                }
+            }
+        }
+
+        console.log(group);
+
+        return group;
     }
 
     findAdjacentBlocks(block) {
@@ -142,9 +188,16 @@ export class Grid {
 
     addRandomBlockToList() {
         if (this.randomBlockList.length < this.model.getCols()) {
-            const randomColor = COLORS[Math.floor(rng() * 1000 % 3) + 1];
+            var randomColor = null;
+            if (rng() <= 0.05) {
+                randomColor = BLACK;
+            }
+            else {
+                randomColor = COLORS[Math.floor(rng() * 1000 % 3) + 1];
+            }
+
             const randomBlock = new UpcomingBlock(this.randomBlockList.length, 16, randomColor);
-            this.randomBlockList.push(randomBlock);
+                this.randomBlockList.push(randomBlock);
 
             return 0;
         } else {
@@ -170,7 +223,10 @@ export class Grid {
 
                 this.model.getGrid()[x].shift();   
 
-                this.model.pushBlock(x, 15, this.randomBlockList[x].getColor());
+                if (this.randomBlockList[x].getColor() != BLACK)
+                    this.model.pushBlock(x, 15, this.randomBlockList[x].getColor());
+                else
+                    this.model.pushBomb(x, 15, BLACK);
             }
 
             this.randomBlockList = [];

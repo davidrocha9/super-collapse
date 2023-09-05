@@ -5,6 +5,10 @@ export class UpcomingBlockModel {
         this.color = color;
     }
 
+    getColor() {
+        return this.color;
+    }
+
     applyGravity(units) {
         this.y += units;
     }

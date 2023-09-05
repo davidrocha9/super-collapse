@@ -14,6 +14,4 @@ document.body.appendChild(app.view);
 
 const Graphics = PIXI.Graphics;
 
-const Sound = PIXI.Sound;
-
-export { app, Graphics, Sound, PIXEL, RATIO };
+export { app, Graphics, PIXEL, RATIO };

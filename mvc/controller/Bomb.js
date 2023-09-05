@@ -1,16 +1,19 @@
-import { BlockModel } from '../model/BlockModel.js';
-import { BlockView } from '../view/BlockView.js';
+import { BombModel } from '../model/BombModel.js';
+import { BombView } from '../view/BombView.js';
 
-export class Block {
+export class Bomb {
     constructor(x, y, color, clickCallback) {
-        this.model = new BlockModel(x, y, color);
-        this.view = new BlockView(x, y, color);
+        this.model = new BombModel(x, y, color);
+        this.view = new BombView(this.model);
         this.handleClick = clickCallback;
 
         this.view.graphics.on('pointerdown', () => {
             this.handleClick(this.model.x, this.model.y); // Pass x and y as parameters
         });
 
+        this.view.circleGraphics.on('pointerdown', () => {
+            this.handleClick(this.model.x, this.model.y); // Pass x and y as parameters
+        });
     }
 
     getModel() {
@@ -61,6 +64,12 @@ export class Block {
             this.view.getGraphics().parent.removeChild(this.view.getGraphics());
             // Optional: You can destroy the graphics object to free up memory
             this.view.getGraphics().destroy();
+        }
+
+        if (this.view.getCircleGraphics().parent) {
+            this.view.getCircleGraphics().parent.removeChild(this.view.getCircleGraphics());
+            // Optional: You can destroy the graphics object to free up memory
+            this.view.getCircleGraphics().destroy();
         }
     }
 }

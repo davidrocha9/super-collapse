@@ -1,12 +1,14 @@
 import { Block } from '../controller/Block.js';
+import { Bomb } from '../controller/Bomb.js';
 import { COLORS, rng, scoreStyle, PIXEL } from '../../constants.js';
 
 export class GridModel {
-    constructor(handleBlock) {
+    constructor(handleBlock, handleBomb) {
         this.rows = 16;
         this.cols = 12;
         this.grid = [];
-        this.handleBlock = handleBlock;    
+        this.handleBlock = handleBlock;
+        this.handleBomb = handleBomb;    
 
         for (let x = 0; x < this.cols; x++) {
             const column = [];
@@ -24,12 +26,18 @@ export class GridModel {
     }
 
     handleClick = (x, y) => {
+        console.log("lalalalal")
         this.handleBlock(this.grid[x][y]);
     }
 
     pushBlock(x, y, color) {
         const block = new Block(x, y, color, (x, y) => this.handleClick(x, y));
         this.grid[x].push(block);
+    }
+
+    pushBomb(x, y, color) {
+        const bomb = new Bomb(x, y, color, (x, y) => this.handleClick(x, y));
+        this.grid[x].push(bomb);
     }
 
     getGrid() {
