@@ -1,5 +1,5 @@
-import { app, Graphics, writePlaceholder } from '../../display.js';
-import { PIXEL, scoreStyle } from '../../constants.js';
+import { app, Graphics, PIXEL, RATIO } from '../../display.js';
+import { scoreStyle, writePlaceholder } from '../../constants.js';
 
 export class SettingsView {
     constructor(chooseLevelCallback) {
@@ -24,7 +24,7 @@ export class SettingsView {
             dropShadowDistance: 2,
             fill: "#fff59a",
             fontFamily: "\"Palatino Linotype\", \"Book Antiqua\", Palatino, serif",
-            fontSize: 50,
+            fontSize: RATIO *  50,
             fontStyle: "italic",
             fontWeight: "bold",
             letterSpacing: 3,
@@ -44,7 +44,7 @@ export class SettingsView {
             dropShadowColor: "#ffffff",
             fill: "#ffffff",
             fontFamily: "Arial Black",
-            fontSize: 30,
+            fontSize: RATIO *  30,
             fontWeight: "bold",
             strokeThickness: 3
         });

@@ -1,5 +1,5 @@
-import { app, Graphics, writePlaceholder, gradientTexture, createGradientTexture } from '../../display.js';
-import { PIXEL, hudStyle, scoreStyle, backToMenuStyle } from '../../constants.js';
+import { app, Graphics, PIXEL, RATIO } from '../../display.js';
+import { hudStyle, scoreStyle, backToMenuStyle, writePlaceholder, gradientTexture, createGradientTexture } from '../../constants.js';
 
 export class GameView {
     constructor(reset) {
@@ -145,20 +145,6 @@ export class GameView {
         }
     }
 
-    writePlaceholder(text, x, y, style, spacing, x_stretch, y_stretch) {
-        // iterate string text
-        for (let i = 0; i < text.length; i++) {
-            let placeholder = new PIXI.Text(text[i], style);
-            placeholder.x = x + i * spacing;
-            placeholder.y = y - 2.5 * (1 - (i % 2));
-            placeholder.scale.x = x_stretch;
-            placeholder.scale.y = y_stretch;
-            app.stage.addChild(placeholder);
-            this.elements.push(placeholder);
-        }
-        
-    }
-
     draw() {
         const backgroundGrid = new Graphics();
         backgroundGrid
@@ -226,7 +212,7 @@ export class GameView {
         app.stage.addChild(scoreRect);
         this.elements.push(scoreRect);
 
-        this.writePlaceholder('SCORE', 600*PIXEL, 180*PIXEL, hudStyle, 15, 1, 1);
+        writePlaceholder('SCORE', 595*PIXEL, 180*PIXEL, hudStyle, 15, 1, 1);
 
         const levelRect = new Graphics();
         levelRect.beginFill(0xffffff)
@@ -237,7 +223,7 @@ export class GameView {
         app.stage.addChild(levelRect);
         this.elements.push(levelRect);
 
-        this.writePlaceholder('LEVEL', 600*PIXEL, 280*PIXEL, hudStyle, 15, 1, 1);
+        writePlaceholder('LEVEL', 595*PIXEL, 280*PIXEL, hudStyle, 15, 1, 1);
 
         const linesLeftRect = new Graphics();
         linesLeftRect.beginFill(0xffffff)
@@ -248,7 +234,7 @@ export class GameView {
         app.stage.addChild(linesLeftRect);
         this.elements.push(linesLeftRect);
 
-        this.writePlaceholder('LINES LEFT', 570*PIXEL, 380*PIXEL, hudStyle, 15, 1, 1);
+        writePlaceholder('LINES LEFT', 560*PIXEL, 380*PIXEL, hudStyle, 15, 1, 1);
 
         const superStyle = new PIXI.TextStyle({
             dropShadow: true,
@@ -257,7 +243,7 @@ export class GameView {
             dropShadowDistance: 2,
             fill: "#fff59a",
             fontFamily: "\"Palatino Linotype\", \"Book Antiqua\", Palatino, serif",
-            fontSize: 50,
+            fontSize: RATIO *  50,
             fontStyle: "italic",
             fontWeight: "bold",
             letterSpacing: 3,
@@ -277,12 +263,12 @@ export class GameView {
             dropShadowColor: "#ffffff",
             fill: "#ffffff",
             fontFamily: "Arial Black",
-            fontSize: 30,
+            fontSize: RATIO *  30,
             fontWeight: "bold",
             strokeThickness: 3
         });
 
-        this.writePlaceholder("COLLAPSE!", 545*PIXEL, 80*PIXEL, collapseStyle, 22.5, 1, 1.75);
+        writePlaceholder("COLLAPSE!", 545*PIXEL, 80*PIXEL, collapseStyle, 22.5, 1, 1.75);
 
         const whiteBlock = new Graphics();
         whiteBlock.beginFill(0xffffff)
@@ -302,7 +288,7 @@ export class GameView {
         this.elements.push(this.level);
 
         this.linesleft = new PIXI.Text("100", scoreStyle);
-        this.linesleft.x = 615 * PIXEL;
+        this.linesleft.x = 610 * PIXEL;
         this.linesleft.y = 405 * PIXEL;
         app.stage.addChild(this.linesleft);
         this.elements.push(this.linesleft)

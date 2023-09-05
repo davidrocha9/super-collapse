@@ -1,5 +1,3 @@
-import { app, Graphics, writePlaceholder } from '../../display.js';
-import { PIXEL, scoreStyle } from '../../constants.js';
 import { SettingsView } from '../view/SettingsView.js';
 
 export class Settings {

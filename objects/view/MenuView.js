@@ -1,5 +1,5 @@
-import { app, Graphics, writePlaceholder } from '../../display.js';
-import { PIXEL, scoreStyle } from '../../constants.js';
+import { app, Graphics, PIXEL } from '../../display.js';
+import { writePlaceholder, scoreStyle, superStyle, collapseStyle } from '../../constants.js';
 
 export class MenuView {
     constructor(startNewGameCallback, showSettingsCallback) {
@@ -18,37 +18,11 @@ export class MenuView {
         app.stage.addChild(whiteBlock);
         this.menuElements.push(whiteBlock);
 
-        const superStyle = new PIXI.TextStyle({
-            dropShadow: true,
-            dropShadowAngle: 0.5,
-            dropShadowBlur: 4,
-            dropShadowDistance: 2,
-            fill: "#fff59a",
-            fontFamily: "\"Palatino Linotype\", \"Book Antiqua\", Palatino, serif",
-            fontSize: 50,
-            fontStyle: "italic",
-            fontWeight: "bold",
-            letterSpacing: 3,
-            strokeThickness: 2
-        });
         const superText = new PIXI.Text('Super', superStyle);
         superText.x = 380*PIXEL;
         superText.y = 200*PIXEL;
         app.stage.addChild(superText);
         this.menuElements.push(superText);
-        
-        const collapseStyle = new PIXI.TextStyle({
-            dropShadow: true,
-            dropShadowAlpha: 0.75,
-            dropShadowAngle: -1.5,
-            dropShadowBlur: 4,
-            dropShadowColor: "#ffffff",
-            fill: "#ffffff",
-            fontFamily: "Arial Black",
-            fontSize: 30,
-            fontWeight: "bold",
-            strokeThickness: 3
-        });
         
         const placeholders = writePlaceholder("COLLAPSE!", 350*PIXEL, 280*PIXEL, collapseStyle, 22.5, 1, 1.75);
 
