@@ -14,4 +14,4 @@ document.body.appendChild(app.view);
 
 const Graphics = PIXI.Graphics;
 
-export { app, Graphics, ticker, PIXEL, RATIO };
+export { app, Graphics, PIXEL, RATIO };

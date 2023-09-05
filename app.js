@@ -1,3 +1,3 @@
-import { Menu } from './objects/controller/Menu.js';
+import { Menu } from './mvc/controller/Menu.js';
 
 const menu = new Menu();
