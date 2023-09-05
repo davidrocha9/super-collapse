@@ -36,12 +36,11 @@ export class Grid {
     }
 
     handleClick = (block) => {
-        console.log(block);
         const group = this.findAdjacentBlocks(block);
 
         if (group.length > 2) {
             this.collapseBlocks(group);
-            // Call the callback function in the Game class
+            // Call the Callback function in the Game class
             if (typeof this.handleBlockClickCallback === 'function') {
                 this.handleBlockClickCallback(group);
             }
@@ -177,8 +176,6 @@ export class Grid {
 
                 this.model.pushBlock(x, 15, this.randomBlockList[x].color);
             }
-
-            console.log(this.model.getGrid());
 
             this.randomBlockList = [];
 

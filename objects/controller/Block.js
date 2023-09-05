@@ -8,7 +8,6 @@ export class Block {
         this.handleClick = clickCallback;
 
         this.view.graphics.on('pointerdown', () => {
-            console.log(this)
             this.handleClick(this.model.x, this.model.y); // Pass x and y as parameters
         });
 

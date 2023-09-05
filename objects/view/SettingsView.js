@@ -1,11 +1,10 @@
 import { app, Graphics, writePlaceholder } from '../../display.js';
 import { PIXEL, scoreStyle } from '../../constants.js';
 
-export class MenuView {
-    constructor(startNewGameCallback, showSettingsCallback) {
-        this.menuElements = [];
-        this.startNewGameCallback = startNewGameCallback;
-        this.showSettingsCallback = showSettingsCallback;
+export class SettingsView {
+    constructor(chooseLevelCallback) {
+        this.settingsElements = [];
+        this.chooseLevelCallback = chooseLevelCallback;
         this.draw();
     }
 
@@ -16,7 +15,7 @@ export class MenuView {
             .endFill();
 
         app.stage.addChild(whiteBlock);
-        this.menuElements.push(whiteBlock);
+        this.settingsElements.push(whiteBlock);
 
         const superStyle = new PIXI.TextStyle({
             dropShadow: true,
@@ -35,7 +34,7 @@ export class MenuView {
         superText.x = 380*PIXEL;
         superText.y = 200*PIXEL;
         app.stage.addChild(superText);
-        this.menuElements.push(superText);
+        this.settingsElements.push(superText);
         
         const collapseStyle = new PIXI.TextStyle({
             dropShadow: true,
@@ -53,43 +52,61 @@ export class MenuView {
         const placeholders = writePlaceholder("COLLAPSE!", 350*PIXEL, 280*PIXEL, collapseStyle, 22.5, 1, 1.75);
 
         for (const placeholder of placeholders) {
-            this.menuElements.push(placeholder);
+            this.settingsElements.push(placeholder);
         }
 
-        let play = new PIXI.Text("PLAY", scoreStyle);
-        play.x = 412.5 * PIXEL;
-        play.y = 410 * PIXEL;
-        app.stage.addChild(play);
-        this.menuElements.push(play);
+        let easy = new PIXI.Text("EASY", scoreStyle);
+        easy.x = 412.5 * PIXEL;
+        easy.y = 410 * PIXEL;
+        app.stage.addChild(easy);
+        this.settingsElements.push(easy);
 
-        play.interactive = true;
-        play.buttonMode = true;
-        play.on('pointerdown', () => {
-            for (const element of this.menuElements) {
+        easy.interactive = true;
+        easy.buttonMode = true;
+        easy.on('pointerdown', () => {
+            for (const element of this.settingsElements) {
                 app.stage.removeChild(element);
             }
     
-            this.menuElements.length = 0;
+            this.settingsElements.length = 0;
             
-            this.startNewGameCallback();
+            this.chooseLevelCallback(1);
         });
 
-        let settings = new PIXI.Text("SETTINGS", scoreStyle);
-        settings.x = 380 * PIXEL;
-        settings.y = 470 * PIXEL;
-        app.stage.addChild(settings);
-        this.menuElements.push(settings);
+        let medium = new PIXI.Text("MEDIUM", scoreStyle);
+        medium.x = 387.5 * PIXEL;
+        medium.y = 470 * PIXEL;
+        app.stage.addChild(medium);
+        this.settingsElements.push(medium);
 
-        settings.interactive = true;
-        settings.buttonMode = true;
-        settings.on('pointerdown', () => {
-            for (const element of this.menuElements) {
+        medium.interactive = true;
+        medium.buttonMode = true;
+        medium.on('pointerdown', () => {
+            for (const element of this.settingsElements) {
                 app.stage.removeChild(element);
             }
+    
+            this.settingsElements.length = 0;
+            
+            this.chooseLevelCallback(2);
+        });
 
-            this.menuElements.length = 0;
+        let hard = new PIXI.Text("HARD", scoreStyle);
+        hard.x = 410 * PIXEL;
+        hard.y = 540 * PIXEL;
+        app.stage.addChild(hard);
+        this.settingsElements.push(hard);
 
-            this.showSettingsCallback();
+        hard.interactive = true;
+        hard.buttonMode = true;
+        hard.on('pointerdown', () => {
+            for (const element of this.settingsElements) {
+                app.stage.removeChild(element);
+            }
+    
+            this.settingsElements.length = 0;
+            
+            this.chooseLevelCallback(3);
         });
     }
 }
