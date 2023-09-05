@@ -10,7 +10,6 @@ export class Settings {
     chooseLevel(level) {
         this.level = level;
         this.chooseLevelCallback(this.level);
-        console.log("aqui");
     }
 
     draw() {

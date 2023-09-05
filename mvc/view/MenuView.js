@@ -1,5 +1,5 @@
 import { app, Graphics, PIXEL } from '../../display.js';
-import { writePlaceholder, scoreStyle, superStyle, collapseStyle } from '../../constants.js';
+import { PADDING, COLORS, rng, writePlaceholder, scoreStyle, superStyle, collapseStyle, drawLogo, drawBlocks  } from '../../constants.js';
 
 export class MenuView {
     constructor(startNewGameCallback, showSettingsCallback) {
@@ -8,31 +8,17 @@ export class MenuView {
         this.showSettingsCallback = showSettingsCallback;
         this.draw();
     }
-
+    
     draw() {
-        const whiteBlock = new Graphics();
-        whiteBlock.beginFill(0xff9b00)
-            .drawRoundedRect(130 * PIXEL, 280 * PIXEL, 240 * PIXEL, 160 * PIXEL)
-            .endFill();
-
-        app.stage.addChild(whiteBlock);
-        this.menuElements.push(whiteBlock);
-
-        const superText = new PIXI.Text('Super', superStyle);
-        superText.x = 380*PIXEL;
-        superText.y = 200*PIXEL;
-        app.stage.addChild(superText);
-        this.menuElements.push(superText);
+        const logoElements = drawLogo(340, 225);
         
-        const placeholders = writePlaceholder("COLLAPSE!", 350*PIXEL, 280*PIXEL, collapseStyle, 22.5, 1, 1.75);
-
-        for (const placeholder of placeholders) {
-            this.menuElements.push(placeholder);
+        for (const element of logoElements) {
+            this.menuElements.push(element);
         }
 
         let play = new PIXI.Text("PLAY", scoreStyle);
-        play.x = 412.5 * PIXEL;
-        play.y = 410 * PIXEL;
+        play.x = 425 * PIXEL;
+        play.y = 400 * PIXEL;
         app.stage.addChild(play);
         this.menuElements.push(play);
 
@@ -49,8 +35,8 @@ export class MenuView {
         });
 
         let settings = new PIXI.Text("SETTINGS", scoreStyle);
-        settings.x = 380 * PIXEL;
-        settings.y = 470 * PIXEL;
+        settings.x = 390 * PIXEL;
+        settings.y = 460 * PIXEL;
         app.stage.addChild(settings);
         this.menuElements.push(settings);
 
@@ -65,5 +51,20 @@ export class MenuView {
 
             this.showSettingsCallback();
         });
+
+        let blueBlock = new Graphics();
+        blueBlock.beginFill(0x0000ff)
+            .lineStyle(1, 0x000000, 1)
+            .drawRoundedRect(0 * PIXEL, 0 * PIXEL,
+                60 * PIXEL, 60 * PIXEL, 5)
+            .endFill();
+
+        app.stage.addChild(blueBlock);
+        this.menuElements.push(blueBlock);
+
+        const blocks = drawBlocks();
+        for (const block of blocks) {
+            this.menuElements.push(block);
+        }
     }
 }

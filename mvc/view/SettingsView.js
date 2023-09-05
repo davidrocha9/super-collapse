@@ -1,5 +1,6 @@
-import { app, Graphics, PIXEL, RATIO } from '../../display.js';
-import { scoreStyle, writePlaceholder } from '../../constants.js';
+import { app, Graphics, PIXEL } from '../../display.js';
+import { PADDING, COLORS, rng, writePlaceholder, scoreStyle, superStyle, collapseStyle, drawLogo, drawBlocks  } from '../../constants.js';
+
 
 export class SettingsView {
     constructor(chooseLevelCallback) {
@@ -9,55 +10,15 @@ export class SettingsView {
     }
 
     draw() {
-        const whiteBlock = new Graphics();
-        whiteBlock.beginFill(0xff9b00)
-            .drawRoundedRect(130 * PIXEL, 280 * PIXEL, 240 * PIXEL, 160 * PIXEL)
-            .endFill();
-
-        app.stage.addChild(whiteBlock);
-        this.settingsElements.push(whiteBlock);
-
-        const superStyle = new PIXI.TextStyle({
-            dropShadow: true,
-            dropShadowAngle: 0.5,
-            dropShadowBlur: 4,
-            dropShadowDistance: 2,
-            fill: "#fff59a",
-            fontFamily: "\"Palatino Linotype\", \"Book Antiqua\", Palatino, serif",
-            fontSize: RATIO *  50,
-            fontStyle: "italic",
-            fontWeight: "bold",
-            letterSpacing: 3,
-            strokeThickness: 2
-        });
-        const superText = new PIXI.Text('Super', superStyle);
-        superText.x = 380*PIXEL;
-        superText.y = 200*PIXEL;
-        app.stage.addChild(superText);
-        this.settingsElements.push(superText);
+        const logoElements = drawLogo(340, 225);
         
-        const collapseStyle = new PIXI.TextStyle({
-            dropShadow: true,
-            dropShadowAlpha: 0.75,
-            dropShadowAngle: -1.5,
-            dropShadowBlur: 4,
-            dropShadowColor: "#ffffff",
-            fill: "#ffffff",
-            fontFamily: "Arial Black",
-            fontSize: RATIO *  30,
-            fontWeight: "bold",
-            strokeThickness: 3
-        });
-        
-        const placeholders = writePlaceholder("COLLAPSE!", 350*PIXEL, 280*PIXEL, collapseStyle, 22.5, 1, 1.75);
-
-        for (const placeholder of placeholders) {
-            this.settingsElements.push(placeholder);
+        for (const element of logoElements) {
+            this.settingsElements.push(element);
         }
 
         let easy = new PIXI.Text("EASY", scoreStyle);
-        easy.x = 412.5 * PIXEL;
-        easy.y = 410 * PIXEL;
+        easy.x = 425 * PIXEL;
+        easy.y = 380 * PIXEL;
         app.stage.addChild(easy);
         this.settingsElements.push(easy);
 
@@ -74,8 +35,8 @@ export class SettingsView {
         });
 
         let medium = new PIXI.Text("MEDIUM", scoreStyle);
-        medium.x = 387.5 * PIXEL;
-        medium.y = 470 * PIXEL;
+        medium.x = 400 * PIXEL;
+        medium.y = 440 * PIXEL;
         app.stage.addChild(medium);
         this.settingsElements.push(medium);
 
@@ -92,8 +53,8 @@ export class SettingsView {
         });
 
         let hard = new PIXI.Text("HARD", scoreStyle);
-        hard.x = 410 * PIXEL;
-        hard.y = 540 * PIXEL;
+        hard.x = 420 * PIXEL;
+        hard.y = 500 * PIXEL;
         app.stage.addChild(hard);
         this.settingsElements.push(hard);
 
@@ -108,5 +69,7 @@ export class SettingsView {
             
             this.chooseLevelCallback(3);
         });
+
+        drawBlocks();
     }
 }

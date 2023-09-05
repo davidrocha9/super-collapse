@@ -23,9 +23,7 @@ export class Menu {
     }
 
     updateLevel(level) {
-        console.log(level);
         this.level = level;
-        console.log(this.level);
         this.view.draw();
     }
 }
