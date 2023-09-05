@@ -1,5 +1,5 @@
 import { app, Graphics, PIXEL } from '../../display.js';
-import { COLORS, rng, writePlaceholder, scoreStyle, backToMenuStyle, drawLogo, gradientTexture, hudStyle, createGradientTexture  } from '../../constants.js';
+import { COLORS, rng, writePlaceholder, scoreStyle, backToMenuStyle, drawLogo, gradientTexture, hudStyle, createGradientTexture, LIGHTBLACK, BACKGROUND, LIGHTYELLOW, WHITE, BLACK, RED, GREEN, BLUE, ORANGE } from '../../constants.js';
 
 export class GameView {
     constructor(reset) {
@@ -17,7 +17,7 @@ export class GameView {
     draw() {
         const background = new Graphics();
         background
-        .beginFill(0xff9b00)
+        .beginFill(BACKGROUND)
         .drawRect(0 ,0 , app.renderer.width, app.renderer.height)
         .endFill();
 
@@ -35,7 +35,7 @@ export class GameView {
         this.drawUpcomingGrid()
 
         const gridLine = new Graphics();
-        gridLine.lineStyle(2, 0x000000, 1)
+        gridLine.lineStyle(2, BLACK, 1)
             .drawRect(9*PIXEL, 40*PIXEL, 482*PIXEL, 684*PIXEL);
 
         app.stage.addChild(gridLine);
@@ -49,20 +49,20 @@ export class GameView {
 
         // draw red line rectangle
         const hud = new Graphics();
-        hud.beginFill(0xffffff)
+        hud.beginFill(WHITE)
             .drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 703*PIXEL)
             .endFill();
 
         // new circle and append to hud
         const circle = new Graphics();
         circle.beginTextureFill({ texture: hudTexture })
-            .lineStyle(3, 0xfef392, 1)
+            .lineStyle(3, LIGHTYELLOW, 1)
             .drawCircle(130*PIXEL, 300*PIXEL, 700*PIXEL, 700*PIXEL)
             .endFill();
         circle.filters = [new PIXI.filters.BlurFilter(10)];
 
         const mask = new PIXI.Graphics();
-        mask.beginFill(0x000000); // Mask color (black)
+        mask.beginFill(BLACK); // Mask color (black)
         mask.drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 700*PIXEL); // Mask position and size
         mask.endFill();
 
@@ -77,7 +77,7 @@ export class GameView {
         this.elements.push(mask);
 
         const hudLine = new Graphics();
-        hudLine.lineStyle(4, 0xfcf191, 1)
+        hudLine.lineStyle(4, LIGHTYELLOW, 1)
             .drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 703*PIXEL);
 
         app.stage.addChild(hudLine);
@@ -89,8 +89,8 @@ export class GameView {
         }
 
         const scoreRect = new Graphics();
-        scoreRect.beginFill(0xffffff)
-            .lineStyle(3, 0xfef392, 1)
+        scoreRect.beginFill(WHITE)
+            .lineStyle(3, LIGHTYELLOW, 1)
             .drawRoundedRect(550*PIXEL, 200*PIXEL, 175*PIXEL, 50*PIXEL, 7*PIXEL)
             .endFill();
 
@@ -103,8 +103,8 @@ export class GameView {
         }
 
         const levelRect = new Graphics();
-        levelRect.beginFill(0xffffff)
-            .lineStyle(3, 0xfef392, 1)
+        levelRect.beginFill(WHITE)
+            .lineStyle(3, LIGHTYELLOW, 1)
             .drawRoundedRect(550*PIXEL, 300*PIXEL, 175*PIXEL, 50*PIXEL, 7*PIXEL)
             .endFill();
 
@@ -117,8 +117,8 @@ export class GameView {
         }
 
         const linesLeftRect = new Graphics();
-        linesLeftRect.beginFill(0xffffff)
-            .lineStyle(3, 0xfef392, 1)
+        linesLeftRect.beginFill(WHITE)
+            .lineStyle(3, LIGHTYELLOW, 1)
             .drawRoundedRect(550*PIXEL, 400*PIXEL, 175*PIXEL, 50*PIXEL, 7*PIXEL)
             .endFill();
 
@@ -133,7 +133,7 @@ export class GameView {
         drawLogo();
 
         const whiteBlock = new Graphics();
-        whiteBlock.beginFill(0xffffff)
+        whiteBlock.beginFill(WHITE)
             .drawRoundedRect(10, 40, 100, 100)
             .endFill();
         
@@ -160,7 +160,7 @@ export class GameView {
 
     showWinScreen() {
         const whiteBlock = new Graphics();
-        whiteBlock.beginFill(0xff9b00)
+        whiteBlock.beginFill(BACKGROUND)
             .drawRoundedRect(130 * PIXEL, 280 * PIXEL, 240 * PIXEL, 160 * PIXEL)
             .endFill();
 
@@ -180,8 +180,8 @@ export class GameView {
         this.elements.push(nextLevelPlaceholder);
 
         let arrow = new Graphics();
-        arrow.beginFill(0xffffff)
-        .lineStyle(2, 0xe28503, 1)
+        arrow.beginFill(WHITE)
+        .lineStyle(2, ORANGE, 1)
         .drawPolygon([
             10, 10,
             25, 0,
@@ -217,10 +217,10 @@ export class GameView {
         });
     }
 
-    drawFallingBlock(x, y, color1, color2, blockColor) {
+    drawFallingBlock(x, y, blockColor) {
         let block = new Graphics();
         block.beginFill(blockColor)
-            .lineStyle(1, 0x000000, 1)
+            .lineStyle(1, BLACK, 1)
             .drawRoundedRect(x * PIXEL, (y + 50) * PIXEL,
                 60 * PIXEL, 60 * PIXEL, 5)
             .endFill();
@@ -230,88 +230,20 @@ export class GameView {
     }
 
     drawFallingBlocks() {
-        this.drawFallingBlock(835, 40, '#00ff00', '#ffffff', 0x00ff00);
-
-        this.drawFallingBlock(770, 110, '#000000', '#ffffff', 0xffffff);
-        
-        this.drawFallingBlock(835, 210, '#000000', '#ffffff', 0x0000ff)
-        
-        //this.drawFallingBlock(835, 330, '#e0ffe0', '#00ff00', 0x0000ff)
-
-        let blueBlock = new Graphics();
-        blueBlock.beginFill(0x0000ff)
-            .lineStyle(1, 0x000000, 1)
-            .drawRoundedRect(835 * PIXEL, 260 * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
-            .endFill();
-        
-        app.stage.addChild(blueBlock);
-        this.elements.push(blueBlock);
-
-        let greenBlock2 = new Graphics();
-        greenBlock2.beginFill(0x00ff00)
-            .lineStyle(1, 0x000000, 1)
-            .drawRoundedRect(835 * PIXEL, 380 * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
-            .endFill();
-        
-        app.stage.addChild(greenBlock2);
-        this.elements.push(greenBlock2);
-
-        let redBlock = new Graphics();
-        redBlock.beginFill(0xff0000)
-            .lineStyle(1, 0x000000, 1)
-            .drawRoundedRect(770 * PIXEL, 430 * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
-            .endFill();
-        
-        app.stage.addChild(redBlock);
-        this.elements.push(redBlock);
-
-        let whiteBlock2 = new Graphics();
-        whiteBlock2.beginFill(0xffffff)
-            .lineStyle(1, 0x000000, 1)
-            .drawRoundedRect(835 * PIXEL, 520 * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
-            .endFill();
-        
-        app.stage.addChild(whiteBlock2);
-        this.elements.push(whiteBlock2);
-
-        let redBlock2 = new Graphics();
-        redBlock2.beginFill(0xff0000)
-            .lineStyle(1, 0x000000, 1)
-            .drawRoundedRect(835 * PIXEL, 585 * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
-            .endFill();
-        
-        app.stage.addChild(redBlock2);
-        this.elements.push(redBlock2);
-
-        let blueBlock2 = new Graphics();
-        blueBlock2.beginFill(COLORS[Math.floor(rng() * 1000 % 3) + 1])
-            .lineStyle(1, 0x000000, 1)
-            .drawRoundedRect(765 * PIXEL, 565 * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
-            .endFill();
-        
-        app.stage.addChild(blueBlock2);
-        this.elements.push(blueBlock2);
-
-        let greenBlock3 = new Graphics();
-        greenBlock3.beginFill(COLORS[Math.floor(rng() * 1000 % 3) + 1])
-            .lineStyle(1, 0x000000, 1)
-            .drawRoundedRect(835 * PIXEL, 650 * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
-            .endFill();
-        
-        app.stage.addChild(greenBlock3);
-        this.elements.push(greenBlock3);
+        this.drawFallingBlock(835, 40, GREEN);
+        this.drawFallingBlock(770, 110, WHITE);
+        this.drawFallingBlock(835, 210, BLUE);
+        this.drawFallingBlock(835, 340, GREEN);
+        this.drawFallingBlock(770, 370, RED);
+        this.drawFallingBlock(835, 475, WHITE);
+        this.drawFallingBlock(770, 520, BLUE);
+        this.drawFallingBlock(835, 540, RED);
+        this.drawFallingBlock(835, 605, GREEN);
     }
 
     showLossScreen() {
         const whiteBlock = new Graphics();
-        whiteBlock.beginFill(0xff9b00)
+        whiteBlock.beginFill(BACKGROUND)
             .drawRoundedRect(130 * PIXEL, 280 * PIXEL, 240 * PIXEL, 160 * PIXEL)
             .endFill();
 
@@ -331,8 +263,8 @@ export class GameView {
         this.elements.push(nextLevelPlaceholder);
 
         let arrow = new Graphics();
-        arrow.beginFill(0xffffff)
-        .lineStyle(2, 0xe28503, 1)
+        arrow.beginFill(WHITE)
+        .lineStyle(2, ORANGE, 1)
         .drawPolygon([
             10, 10,
             25, 0,
@@ -371,8 +303,8 @@ export class GameView {
     drawUpcomingGrid() {
         for (let i = 0; i < 12; i++) {
             let upcomingGrid = new Graphics();
-            upcomingGrid.beginFill(0x484444)
-                .lineStyle(3, 0xfef392, 1)
+            upcomingGrid.beginFill(LIGHTBLACK)
+                .lineStyle(3, LIGHTYELLOW, 1)
                 .drawRect(10*PIXEL + 40*i*PIXEL, 683*PIXEL, 40*PIXEL, 40*PIXEL)
                 .endFill();
 
@@ -384,8 +316,8 @@ export class GameView {
     drawUpcomingGrid() {
         for (let i = 0; i < 12; i++) {
             let upcomingGrid = new Graphics();
-            upcomingGrid.beginFill(0x484444)
-                .lineStyle(3, 0xfef392, 1)
+            upcomingGrid.beginFill(LIGHTBLACK)
+                .lineStyle(3, LIGHTYELLOW, 1)
                 .drawRect(10*PIXEL + 40*i*PIXEL, 683*PIXEL, 40*PIXEL, 40*PIXEL)
                 .endFill();
     

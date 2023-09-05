@@ -1,10 +1,20 @@
 import { app, Graphics, PIXEL, RATIO } from './display.js';
 
+const LIGHTBLACK = 0x484444;
+const BACKGROUND = 0xff9b00;
+const LIGHTYELLOW = 0xfef392;
+const WHITE = 0xffffff;
+const BLACK = 0x000000;
+const RED = 0xff0000;
+const GREEN = 0x00ff00;
+const BLUE = 0x0000ff;
+const ORANGE = 0xe28503;
+
 // 1=blue, 2=green, 3=red
 const COLORS = {
-    1: 0x0000ff,
-    2: 0x00ff00,
-    3: 0xff0000,
+    1: BLUE,
+    2: GREEN,
+    3: RED,
 };
 
 const PADDING = 2 * PIXEL;
@@ -120,8 +130,8 @@ const gradientTexture = createGradientTexture(
 function drawUpcomingGrid() {
     for (let i = 0; i < 12; i++) {
         let upcomingGrid = new Graphics();
-        upcomingGrid.beginFill(0x484444)
-            .lineStyle(3, 0xfef392, 1)
+        upcomingGrid.beginFill(LIGHTBLACK)
+            .lineStyle(3, LIGHTYELLOW, 1)
             .drawRect(10*PIXEL + 40*i*PIXEL, 683*PIXEL, 40*PIXEL, 40*PIXEL)
             .endFill();
 
@@ -133,8 +143,8 @@ function drawLogo(x, y) {
     const elements = [];
 
     const whiteBlock = new Graphics();
-    whiteBlock.beginFill(0xffffff)
-        .lineStyle(1, 0x000000, 1)
+    whiteBlock.beginFill(WHITE)
+        .lineStyle(1, BLACK, 1)
         .drawRoundedRect(x * PIXEL, (y + 15) * PIXEL,
             60 * PIXEL, 60 * PIXEL, 5)
         .endFill();
@@ -143,8 +153,8 @@ function drawLogo(x, y) {
     elements.push(whiteBlock);
 
     const redBlock = new Graphics();
-    redBlock.beginFill(0xff0000)
-        .lineStyle(1, 0x000000, 1)
+    redBlock.beginFill(RED)
+        .lineStyle(1, BLACK, 1)
         .drawRoundedRect((x + 60) * PIXEL, y * PIXEL,
             60 * PIXEL, 60 * PIXEL, 5)
         .endFill();
@@ -153,8 +163,8 @@ function drawLogo(x, y) {
     elements.push(redBlock);
 
     const greenBlock = new Graphics();
-    greenBlock.beginFill(0x00ff00)
-        .lineStyle(1, 0x000000, 1)
+    greenBlock.beginFill(GREEN)
+        .lineStyle(1, BLACK, 1)
         .drawRoundedRect((x + 120) * PIXEL, y * PIXEL,
             60 * PIXEL, 60 * PIXEL, 5)
         .endFill();
@@ -163,8 +173,8 @@ function drawLogo(x, y) {
     elements.push(greenBlock);
 
     const blueBlock = new Graphics();
-    blueBlock.beginFill(0x0000ff)
-        .lineStyle(1, 0x000000, 1)
+    blueBlock.beginFill(BLUE)
+        .lineStyle(1, BLACK, 1)
         .drawRoundedRect((x + 180) * PIXEL, (y + 15) * PIXEL,
             60 * PIXEL, 60 * PIXEL, 5)
         .endFill();
@@ -196,11 +206,16 @@ function drawBlocks() {
             if (x > 6 && x < 16 && y > 2 && y < 15) continue;
             let block = new Graphics();
             block.beginFill(COLORS[Math.floor(rng() * 1000 % 3) + 1])
-                .lineStyle(1, 0x000000, 1)
+                .lineStyle(1, BLACK, 1)
                 .drawRoundedRect(x * 40 * PIXEL, y * 40 * PIXEL - 10 * PIXEL,
                     40 * PIXEL, 40 * PIXEL, 5)
                 .endFill();
-            
+
+            // Add blur filter
+            const blurFilter = new PIXI.filters.BlurFilter();
+            blurFilter.blur = 5; // Adjust the blur intensity as needed
+            block.filters = [blurFilter];
+
             app.stage.addChild(block);
             elements.push(block);
         }
@@ -212,4 +227,6 @@ function drawBlocks() {
 export { PIXEL, PADDING, COLORS, rng,
     hudStyle, scoreStyle, backToMenuStyle, superStyle,
     collapseStyle, writePlaceholder, createGradientTexture, gradientTexture,
-    drawUpcomingGrid, drawLogo, drawBlocks };
+    drawUpcomingGrid, drawLogo, drawBlocks, LIGHTBLACK,
+    BACKGROUND, LIGHTYELLOW, WHITE, BLACK,
+    RED, GREEN, BLUE, ORANGE };

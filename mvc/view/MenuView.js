@@ -1,5 +1,5 @@
 import { app, Graphics, PIXEL } from '../../display.js';
-import { PADDING, COLORS, rng, writePlaceholder, scoreStyle, superStyle, collapseStyle, drawLogo, drawBlocks  } from '../../constants.js';
+import { scoreStyle, drawLogo, drawBlocks, BLACK, BLUE, BACKGROUND  } from '../../constants.js';
 
 export class MenuView {
     constructor(startNewGameCallback, showSettingsCallback) {
@@ -10,6 +10,15 @@ export class MenuView {
     }
     
     draw() {
+        const background = new Graphics();
+        background
+        .beginFill(BACKGROUND)
+        .lineStyle(1, BLACK, 1)
+        .drawRect(282 * PIXEL, 112 * PIXEL, 358 * PIXEL, 478 * PIXEL)
+        .endFill();
+
+        app.stage.addChild(background);
+
         const logoElements = drawLogo(340, 225);
         
         for (const element of logoElements) {
@@ -53,8 +62,8 @@ export class MenuView {
         });
 
         let blueBlock = new Graphics();
-        blueBlock.beginFill(0x0000ff)
-            .lineStyle(1, 0x000000, 1)
+        blueBlock.beginFill(BLUE)
+            .lineStyle(1, BLACK, 1)
             .drawRoundedRect(0 * PIXEL, 0 * PIXEL,
                 60 * PIXEL, 60 * PIXEL, 5)
             .endFill();

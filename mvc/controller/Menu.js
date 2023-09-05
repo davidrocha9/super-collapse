@@ -8,6 +8,10 @@ export class Menu {
         this.level = 1;
         this.game = null;
         this.settings = null;
+
+        const sound = PIXI;
+        console.log(sound); 
+        sound.play({ loop: true });
     }
 
     startNewGame() {
