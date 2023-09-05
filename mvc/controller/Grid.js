@@ -1,7 +1,7 @@
 import { COLORS, rng, scoreStyle, PIXEL } from '../../constants.js';
 import { Block } from './Block.js';
 import { app, Graphics } from '../../display.js';
-import { UpcomingBlock } from '../UpcomingBlock.js';
+import { UpcomingBlock } from './UpcomingBlock.js';
 import { GridModel } from '../model/GridModel.js';
 import { GridView } from '../view/GridView.js';
 
@@ -149,11 +149,7 @@ export class Grid {
             return 0;
         } else {
             for (let block of this.randomBlockList) {
-                if (block.graphics.parent) {
-                    block.graphics.parent.removeChild(block.graphics);
-                    // Optional: You can destroy the graphics object to free up memory
-                    block.graphics.destroy();
-                }
+                block.delete();
             }
 
             let temp = [];
@@ -174,7 +170,7 @@ export class Grid {
 
                 this.model.getGrid()[x].shift();   
 
-                this.model.pushBlock(x, 15, this.randomBlockList[x].color);
+                this.model.pushBlock(x, 15, this.randomBlockList[x].getColor());
             }
 
             this.randomBlockList = [];

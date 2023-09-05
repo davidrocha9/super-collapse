@@ -1,5 +1,5 @@
 import { app, Graphics, PIXEL } from '../../display.js';
-import { PADDING, COLORS, rng, writePlaceholder, scoreStyle, backToMenuStyle, drawLogo, gradientTexture, hudStyle, createGradientTexture  } from '../../constants.js';
+import { COLORS, rng, writePlaceholder, scoreStyle, backToMenuStyle, drawLogo, gradientTexture, hudStyle, createGradientTexture  } from '../../constants.js';
 
 export class GameView {
     constructor(reset) {
@@ -15,6 +15,14 @@ export class GameView {
     }
 
     draw() {
+        const background = new Graphics();
+        background
+        .beginFill(0xff9b00)
+        .drawRect(0 ,0 , app.renderer.width, app.renderer.height)
+        .endFill();
+
+        app.stage.addChild(background);
+
         const backgroundGrid = new Graphics();
         backgroundGrid
         .beginTextureFill({ texture: gradientTexture })

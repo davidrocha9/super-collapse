@@ -1,7 +1,7 @@
 import { COLORS, rng, scoreStyle, PIXEL, backToMenuStyle } from '../../constants.js';
 import { Block } from './Block.js';
 import { app, Graphics } from '../../display.js';
-import { UpcomingBlock } from '../UpcomingBlock.js';
+import { UpcomingBlock } from './UpcomingBlock.js';
 import { Grid } from './Grid.js';
 import { GameView } from '../view/GameView.js';
 
