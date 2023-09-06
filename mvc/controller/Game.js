@@ -2,14 +2,15 @@ import { Grid } from './Grid.js';
 import { GameView } from '../view/GameView.js';
 
 export class Game {
-    constructor(level, resetCallback) {
-        this.view = new GameView(() => this.reset());
+    constructor(level, resetCallback, exitCallback) {
+        this.view = new GameView(() => this.reset(), () => this.exit());
         this.grid = new Grid(this.handleBlockClick.bind(this));
         this.gameElements = [];
         this.linesLeft = 100;
         this.score = 0;
         this.level = level;
         this.resetCallback = resetCallback;
+        this.exitCallback = exitCallback;
         
         this.startRandomBlockTimer();
     }
@@ -17,6 +18,14 @@ export class Game {
     reset() {
         this.grid.clear();
         this.resetCallback();
+    }
+
+    exit() {
+        console.log("bora");
+        console.log(this);
+        clearInterval(this.randomBlockTimer)
+        this.grid.clear();
+        this.exitCallback();
     }
 
     handleBlockClick(group) {

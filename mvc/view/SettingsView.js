@@ -1,5 +1,5 @@
-import { app, Graphics, PIXEL } from '../../display.js';
-import { PADDING, COLORS, rng, writePlaceholder, scoreStyle, superStyle, collapseStyle, drawLogo, drawBlocks  } from '../../constants.js';
+import { app, PIXEL } from '../../display.js';
+import { scoreStyle, drawLogo, drawBlocks  } from '../../constants.js';
 
 
 export class SettingsView {

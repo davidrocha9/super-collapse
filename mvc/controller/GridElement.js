@@ -1,53 +1,61 @@
 export class GridElement {
-    constructor(x, y, color, clickCallback) {
-        this.x = x;
-        this.y = y;
-        this.color = color;
-        this.clickCallback = clickCallback;
+    constructor(model, view, clickCallback) {
+        this.model = model;
+        this.view = view;
+        this.handleClick = clickCallback;
+
+        this.view.graphics.on('pointerdown', () => {
+            this.handleClick(this.model.x, this.model.y);
+        });
     }
 
     getModel() {
-        throw new Error('Subclasses must implement getModel()');
+        return this.model;
     }
 
     getView() {
-        throw new Error('Subclasses must implement getView()');
+        return this.view;
     }
 
     getX() {
-        return this.x;
+        return this.model.getX();
     }
 
     getY() {
-        return this.y;
+        return this.model.getY();
     }
 
     getColor() {
-        return this.color;
+        return this.model.getColor();
     }
 
-    handleClick(x, y) {
-        console.log("siga2");
-        this.clickCallback(x, y);
+    click(x, y) {
+        this.handleClick(x, y);
     }
 
     draw() {
-        throw new Error('Subclasses must implement draw()');
+        this.view.draw(this.model.getX(), this.model.getY(), this.model.getColor());
     }
 
     moveUp() {
-        throw new Error('Subclasses must implement moveUp()');
+        this.model.incrementY(-1);
+        this.view.updateY(-1);
     }
 
     applyGravity(units) {
-        throw new Error('Subclasses must implement applyGravity()');
+        this.model.incrementY(units);
+        this.view.updateY(units);
     }
 
     slide(units) {
-        throw new Error('Subclasses must implement slide()');
+        this.model.incrementX(units);
+        this.view.updateX(units);
     }
 
     delete() {
-        throw new Error('Subclasses must implement delete()');
+        if (this.view.getGraphics().parent) {
+            this.view.getGraphics().parent.removeChild(this.view.getGraphics());
+            this.view.getGraphics().destroy();
+        }
     }
 }

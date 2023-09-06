@@ -1,5 +1,3 @@
-import { app, Graphics } from '../../display.js';
-import { PIXEL } from '../../constants.js';
 import { UpcomingBlockModel } from '../model/UpcomingBlockModel.js';
 import { UpcomingBlockView } from '../view/UpcomingBlockView.js';
 

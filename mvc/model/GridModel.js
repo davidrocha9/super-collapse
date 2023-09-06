@@ -1,6 +1,6 @@
 import { Block } from '../controller/Block.js';
 import { Bomb } from '../controller/Bomb.js';
-import { COLORS, rng, scoreStyle, PIXEL } from '../../constants.js';
+import { COLORS, rng } from '../../constants.js';
 
 export class GridModel {
     constructor(handleBlock, handleBomb) {
@@ -50,6 +50,10 @@ export class GridModel {
 
     getCols() {
         return this.cols;
+    }
+
+    getCol(x) {
+        return this.grid[x];
     }
 
     getBlock(x, y) {

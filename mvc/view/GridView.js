@@ -1,7 +1,3 @@
-// BlockView.js
-import { app, Graphics } from '../../display.js';
-import { PIXEL } from '../../constants.js';
-
 export class GridView {
     constructor(model) {
         this.model = model;

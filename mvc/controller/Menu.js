@@ -11,7 +11,7 @@ export class Menu {
     }
 
     startNewGame() {
-        this.game = new Game(this.level, () => this.reset());
+        this.game = new Game(this.level, () => this.reset(), () => this.reset());
     }
 
     showSettings() {

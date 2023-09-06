@@ -1,4 +1,4 @@
-import { COLORS, rng, BLACK, PIXEL } from '../../constants.js';
+import { COLORS, rng, BLACK } from '../../constants.js';
 import { Block } from './Block.js';
 import { UpcomingBlock } from './UpcomingBlock.js';
 import { GridModel } from '../model/GridModel.js';
@@ -17,13 +17,15 @@ export class Grid {
     }
 
     clear() {
-        // iterate blocks
         for (let x = 0; x < this.model.getCols(); x++) {
-            for (let y = 0; y < this.model.getRows(); y++) {
-                if (this.model.getBlock(x, y) != null) {
-                    this.model.getBlock(x, y).delete();
-                }
+            for (let block of this.model.getCol(x)) {
+                if (block != null)
+                    block.delete();
             }
+        }
+
+        for (let block of this.randomBlockList) {
+            block.delete();
         }
     }
 

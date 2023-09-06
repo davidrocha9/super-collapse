@@ -1,10 +1,11 @@
 import { app, Graphics, PIXEL } from '../../display.js';
-import { COLORS, rng, writePlaceholder, scoreStyle, backToMenuStyle, drawLogo, gradientTexture, hudStyle, createGradientTexture, LIGHTBLACK, BACKGROUND, LIGHTYELLOW, WHITE, BLACK, RED, GREEN, BLUE, ORANGE } from '../../constants.js';
+import { writePlaceholder, scoreStyle, backToMenuStyle, drawLogo, gradientTexture, hudStyle, createGradientTexture, LIGHTBLACK, BACKGROUND, LIGHTYELLOW, WHITE, BLACK, RED, GREEN, BLUE, ORANGE } from '../../constants.js';
 
 export class GameView {
-    constructor(reset) {
+    constructor(reset, exitCallback) {
         this.elements = [];
         this.reset = reset;
+        this.exitCallback = exitCallback;
         this.draw();
     }
 
@@ -138,7 +139,7 @@ export class GameView {
             .endFill();
         
         this.score = new PIXI.Text("0", scoreStyle);
-        this.score.x = 625 * PIXEL;
+        this.score.x = 621 * PIXEL;
         this.score.y = 205 * PIXEL;
         app.stage.addChild(this.score);
         this.elements.push(this.score);
@@ -156,6 +157,27 @@ export class GameView {
         this.elements.push(this.linesleft);
 
         this.drawFallingBlocks();
+
+        const exitBtn = new Graphics();
+        exitBtn.beginFill(LIGHTYELLOW)
+            .lineStyle(3, LIGHTYELLOW, 1)
+            .drawRoundedRect(550*PIXEL, 530*PIXEL, 175*PIXEL, 75*PIXEL, 7*PIXEL)
+            .endFill();
+
+        exitBtn.interactive = true;
+        exitBtn.buttonMode = true;
+        exitBtn.on('pointerdown', () => {
+            this.exitCallback();
+        });
+
+        app.stage.addChild(exitBtn);
+        this.elements.push(exitBtn);
+
+        let exitBtnText = new PIXI.Text("EXIT", scoreStyle);
+        exitBtnText.x = 605 * PIXEL;
+        exitBtnText.y = 540 * PIXEL;
+        app.stage.addChild(exitBtnText);
+        this.elements.push(exitBtnText);
     }
 
     showWinScreen() {

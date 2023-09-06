@@ -1,6 +1,6 @@
 
 import { app, Graphics } from '../../display.js';
-import { PIXEL, PADDING } from '../../constants.js';
+import { PIXEL } from '../../constants.js';
 
 export class BombView {
     constructor(model) {
