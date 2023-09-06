@@ -10,7 +10,6 @@ const GREEN = 0x00ff00;
 const BLUE = 0x0000ff;
 const ORANGE = 0xe28503;
 
-// 1=blue, 2=green, 3=red
 const COLORS = {
     1: BLUE,
     2: GREEN,
@@ -86,7 +85,6 @@ const collapseStyle = new PIXI.TextStyle({
 });
 
 function writePlaceholder(text, x, y, style, spacing, x_stretch, y_stretch) {
-    // iterate string text
     const placeholders = [];
     
     for (let i = 0; i < text.length; i++) {
@@ -123,7 +121,7 @@ const gradientTexture = createGradientTexture(
     app.renderer.height,
     app.renderer.width / 2,
     0,
-    '#080808',
+    '#1F1F1F',
     '#474747'
 );
 
@@ -211,9 +209,8 @@ function drawBlocks() {
                     40 * PIXEL, 40 * PIXEL, 5)
                 .endFill();
 
-            // Add blur filter
             const blurFilter = new PIXI.filters.BlurFilter();
-            blurFilter.blur = 5; // Adjust the blur intensity as needed
+            blurFilter.blur = 5;
             block.filters = [blurFilter];
 
             app.stage.addChild(block);

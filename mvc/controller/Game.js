@@ -3,7 +3,7 @@ import { GameView } from '../view/GameView.js';
 
 export class Game {
     constructor(level, resetCallback, exitCallback) {
-        this.view = new GameView(() => this.reset(), () => this.exit());
+        this.view = new GameView(level, () => this.reset(), () => this.exit());
         this.grid = new Grid(this.handleBlockClick.bind(this));
         this.gameElements = [];
         this.linesLeft = 100;
@@ -17,12 +17,12 @@ export class Game {
     
     reset() {
         this.grid.clear();
+        this.view.clear();
         this.resetCallback();
     }
 
     exit() {
-        console.log("bora");
-        console.log(this);
+        this.view.clear();
         clearInterval(this.randomBlockTimer)
         this.grid.clear();
         this.exitCallback();

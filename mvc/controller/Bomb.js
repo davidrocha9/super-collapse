@@ -16,12 +16,10 @@ export class Bomb extends GridElement {
     delete() {
         if (this.view.getGraphics().parent) {
             this.view.getGraphics().parent.removeChild(this.view.getGraphics());
-            // Custom Bomb deletion logic here
         }
 
         if (this.view.getCircleGraphics().parent) {
             this.view.getCircleGraphics().parent.removeChild(this.view.getCircleGraphics());
-            // Custom Bomb circle deletion logic here
         }
     }
 }

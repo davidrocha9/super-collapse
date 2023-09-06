@@ -39,7 +39,7 @@ export class BlockView {
     delete() {
         if (this.graphics.parent) {
             this.graphics.parent.removeChild(this.graphics);
-            // Optional: You can destroy the graphics object to free up memory
+
             this.graphics.destroy();
         }
     }

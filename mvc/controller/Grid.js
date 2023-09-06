@@ -38,32 +38,20 @@ export class Grid {
     }
 
     handleClick = (element) => {
-        console.log(element);
-
-        // check if block or bomb
         if (element instanceof Block) {
-            console.log("BLOCO")
             const group = this.findAdjacentBlocks(element);
 
             if (group.length > 2) {
                 this.collapseBlocks(group);
-                // Call the Callback function in the Game class
+
                 if (typeof this.handleBlockClickCallback === 'function') {
                     this.handleBlockClickCallback(group);
                 }
             }
         }
         else if (element instanceof Bomb) {
-            console.log("BOMBA")
             const group = this.destroyBlocksInRadius(element.getX(), element.getY(), 2);
-            
-            this.checkGravity();
 
-            this.checkEmptyCols();
-
-            console.log(this.model)
-
-            // Call the Callback function in the Game class
             if (typeof this.handleBlockClickCallback === 'function') {
                 this.handleBlockClickCallback(group);
             }
@@ -90,17 +78,18 @@ export class Grid {
             }
         }
 
-        console.log(group);
+        this.checkGravity();
+
+        this.checkEmptyCols();
 
         return group;
     }
 
     findAdjacentBlocks(block) {
         const color = block.getColor();
-        const visited = new Set(); // Keep track of visited blocks
-        const group = []; // Store the group of blocks to be removed
+        const visited = new Set();
+        const group = [];
     
-        // Define directions (up, down, left, right)
         const directions = [
             { x: -1, y: 0 },
             { x: 1, y: 0 },
@@ -108,7 +97,6 @@ export class Grid {
             { x: 0, y: 1 },
         ];
     
-        // Define a recursive DFS function
         const dfs = (x, y) => {
             if (x < 0 || x >= this.model.getCols() || y < 0 || y >= this.model.getRows()) {
                 return;
@@ -116,12 +104,10 @@ export class Grid {
     
             const currentBlock = this.model.getBlock(x, y);
     
-            // Check if the block is the same color and not visited
             if (currentBlock && currentBlock.getColor() === color && !visited.has(currentBlock)) {
                 visited.add(currentBlock);
                 group.push(currentBlock);
     
-                // Explore adjacent blocks in all directions
                 for (const direction of directions) {
                     const newX = x + direction.x;
                     const newY = y + direction.y;
@@ -130,7 +116,6 @@ export class Grid {
             }
         };
     
-        // Start DFS from the clicked block's position
         dfs(block.getX(), block.getY());
     
         return group;
@@ -211,8 +196,7 @@ export class Grid {
             for (let x = 0; x < this.model.getCols(); x++) {
                 temp.push(this.model.getBlock(x, 0));
             }
-            
-            // check if temp has any non null values
+    
             if (!temp.every(value => value === null))
                 return -1;
 
@@ -299,31 +283,5 @@ export class Grid {
 
             if (this.checkValidHalf(this.model.getGrid().slice(this.model.getCols() - 6, this.model.getCols()).reverse())) break;
         }
-    }
-    
-    shiftColumnLeft(x) {
-        for (let y = 0; y < this.model.getRows(); y++) {
-            if (this.model.getBlock(x - 1, y) != null) {
-                this.model.getBlock(x - 1, y).slide(1);
-            }
-        }
-    
-        // Swap columns
-        const temp = [...this.model.getGrid()[x]];
-        this.model.getGrid()[x] = [...this.model.getGrid()[x - 1]];
-        this.model.getGrid()[x - 1] = temp;
-    }
-    
-    shiftColumnRight(x) {
-        for (let y = 0; y < this.model.getRows(); y++) {
-            if (this.model.getBlock(x + 1, y) != null) {
-                this.model.getBlock(x + 1, y).slide(1);
-            }
-        }
-    
-        // Swap columns
-        const temp = [...this.model.getGrid()[x]];
-        this.model.getGrid()[x] = [...this.model.getGrid()[x + 1]];
-        this.model.getGrid()[x + 1] = temp;
     }
 }

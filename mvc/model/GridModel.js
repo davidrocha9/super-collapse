@@ -20,13 +20,12 @@ export class GridModel {
                     column.push(null);
                 }
             }
-            // Add the column to the grid
+
             this.grid.push(column);
         }
     }
 
     handleClick = (x, y) => {
-        console.log("lalalalal")
         this.handleBlock(this.grid[x][y]);
     }
 

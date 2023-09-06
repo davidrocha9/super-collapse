@@ -2,7 +2,8 @@ import { app, Graphics, PIXEL } from '../../display.js';
 import { writePlaceholder, scoreStyle, backToMenuStyle, drawLogo, gradientTexture, hudStyle, createGradientTexture, LIGHTBLACK, BACKGROUND, LIGHTYELLOW, WHITE, BLACK, RED, GREEN, BLUE, ORANGE } from '../../constants.js';
 
 export class GameView {
-    constructor(reset, exitCallback) {
+    constructor(level, reset, exitCallback) {
+        this.levelText = level;
         this.elements = [];
         this.reset = reset;
         this.exitCallback = exitCallback;
@@ -42,19 +43,16 @@ export class GameView {
         app.stage.addChild(gridLine);
         this.elements.push(gridLine);
 
-        // Create a custom gradient texture
         const hudTexture = createGradientTexture(app.renderer.width / 2,
         app.renderer.height,
         app.renderer.width / 2,
         0,'#ffc300', '#ffaa00');
 
-        // draw red line rectangle
         const hud = new Graphics();
         hud.beginFill(WHITE)
             .drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 703*PIXEL)
             .endFill();
 
-        // new circle and append to hud
         const circle = new Graphics();
         circle.beginTextureFill({ texture: hudTexture })
             .lineStyle(3, LIGHTYELLOW, 1)
@@ -63,14 +61,14 @@ export class GameView {
         circle.filters = [new PIXI.filters.BlurFilter(10)];
 
         const mask = new PIXI.Graphics();
-        mask.beginFill(BLACK); // Mask color (black)
-        mask.drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 700*PIXEL); // Mask position and size
+        mask.beginFill(BLACK);
+        mask.drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 700*PIXEL);
         mask.endFill();
 
-        circle.mask = mask; // Apply the mask to the circle
+        circle.mask = mask;
 
         app.stage.addChild(hud);
-        app.stage.addChild(circle); // Add the circle to the stage
+        app.stage.addChild(circle);
         app.stage.addChild(mask);
 
         this.elements.push(hud);
@@ -144,7 +142,7 @@ export class GameView {
         app.stage.addChild(this.score);
         this.elements.push(this.score);
 
-        this.level = new PIXI.Text("1", scoreStyle);
+        this.level = new PIXI.Text(this.levelText, scoreStyle);
         this.level.x = 625 * PIXEL;
         this.level.y = 305 * PIXEL;
         app.stage.addChild(this.level);

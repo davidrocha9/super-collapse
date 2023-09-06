@@ -33,7 +33,7 @@ export class UpcomingBlockView {
                 .drawRect(this.model.x * 40 * PIXEL + 33 * PIXEL, this.model.y * 40 - 3 * PIXEL, 10 * PIXEL, 10 * PIXEL, 5)
                 .endFill();
 
-            this.circleGraphics.beginFill(0x000000); // Set the fill color to black
+            this.circleGraphics.beginFill(0x000000);
             this.circleGraphics.drawCircle(this.model.x * 40 * PIXEL + 30 * PIXEL, this.model.y * 40 * PIXEL + 65 * PIXEL, 15 * PIXEL);
             this.circleGraphics.endFill();
 
@@ -50,13 +50,13 @@ export class UpcomingBlockView {
     delete() {
         if (this.graphics.parent) {
             this.graphics.parent.removeChild(this.graphics);
-            // Optional: You can destroy the graphics object to free up memory
+
             this.graphics.destroy();
         }
 
         if (this.circleGraphics.parent) {
             this.circleGraphics.parent.removeChild(this.circleGraphics);
-            // Optional: You can destroy the graphics object to free up memory
+
             this.circleGraphics.destroy();
         }
     }

@@ -1,4 +1,4 @@
-const RATIO = 1;
+const RATIO = 0.9;
 const PIXEL = window.innerHeight / 740 * RATIO;
 
 const app = new PIXI.Application({

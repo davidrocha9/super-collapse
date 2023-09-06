@@ -5,5 +5,8 @@
     "pixi-sound": "^3.0.5",
     "pixi.js": "^7.2.4",
     "seedrandom": "^3.0.5"
+  },
+  "scripts": {
+    "build": "webpack --mode production"
   }
 }
