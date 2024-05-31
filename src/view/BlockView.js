@@ -20,11 +20,11 @@ export class BlockView {
     }
 
     draw() {
-        const XCoord = 0.0115 * GAME_WIDTH + this.x * 0.0435 * GAME_WIDTH;
-        const YCoord = 0.0435 * GAME_HEIGHT + this.y * 0.04375 * GAME_WIDTH;
+        const XCoord = 0.013 * GAME_WIDTH + this.x * 0.0435 * GAME_WIDTH;
+        const YCoord = 0.0445 * GAME_HEIGHT + this.y * 0.04375 * GAME_WIDTH;
         this.graphics.beginFill(this.color)
             .drawRoundedRect(XCoord, YCoord,
-                0.0435 * GAME_WIDTH, 0.0435 * GAME_WIDTH, 5)
+                0.04 * GAME_WIDTH, 0.04 * GAME_WIDTH, 5)
             .endFill();
             
         app.stage.addChild(this.graphics);
