@@ -1,51 +1,41 @@
 
-import { app, Graphics } from '../../display.js';
+import { app, Graphics, GAME_WIDTH, GAME_HEIGHT } from '../../display.js';
 import { PIXEL } from '../../constants.js';
 
 export class BombView {
-    constructor(model) {
-        this.model = model;
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        
         this.graphics = new Graphics();
-        this.circleGraphics = new Graphics();
-
         this.graphics.interactive = true;
         this.graphics.buttonMode = true;
-
-        this.circleGraphics.interactive = true;
-        this.circleGraphics.buttonMode = true;
-
+        
         this.draw();
     }
-    
+
     getGraphics() {
         return this.graphics;
     }
 
-    getCircleGraphics() {
-        return this.circleGraphics;
+    draw() {
+        const XCoord = 0.0325 * GAME_WIDTH + this.x * 0.0435 * GAME_WIDTH;
+        const YCoord = 0.07 * GAME_HEIGHT + this.y * 0.04375 * GAME_WIDTH;
+        this.graphics.beginFill(this.color)
+            .drawCircle(XCoord, YCoord,
+                0.0215 * GAME_WIDTH)
+            .endFill();
+            
+        app.stage.addChild(this.graphics);
     }
 
-    draw() {
-        const blockSize = 40 * PIXEL;
-        const padding = 2 * PIXEL;
-        const x = 10 * PIXEL + this.model.x * blockSize;
-        const y = 43 * PIXEL + this.model.y * blockSize;
-    
-        this.graphics.beginFill(this.model.color)
-            .drawRect(this.model.x * 40 * PIXEL + 33 * PIXEL, this.model.y * 40 - 3 * PIXEL, 10 * PIXEL, 10 * PIXEL, 5)
-            .endFill();
+    updateX(units) {
+        this.graphics.x += units * 0.0435 * GAME_WIDTH;
+    }
 
-        this.circleGraphics.beginFill(0x000000);
-        this.circleGraphics.drawCircle(this.model.x * 40 * PIXEL + 30 * PIXEL, this.model.y * 40 * PIXEL + 65 * PIXEL, 15 * PIXEL);
-        this.circleGraphics.endFill();
-
-        this.graphics.pivot.set(x, y);
-        this.graphics.position.set(x, y);
-
-        this.graphics.rotation = 0.75;
-
-        app.stage.addChild(this.graphics);
-        app.stage.addChild(this.circleGraphics);
+    updateY(units) {
+        this.graphics.y += units * 0.0435 * GAME_WIDTH;
     }
 
     delete() {
@@ -54,21 +44,6 @@ export class BombView {
 
             this.graphics.destroy();
         }
-
-        if (this.circleGraphics.parent) {
-            this.circleGraphics.parent.removeChild(this.circleGraphics);
-
-            this.circleGraphics.destroy();
-        }
     }
 
-    updateX(units) {
-        this.graphics.x += units * 40 * PIXEL;
-        this.circleGraphics.x += units * 40 * PIXEL;
-    }
-
-    updateY(units) {
-        this.graphics.y += units * 40 * PIXEL;
-        this.circleGraphics.y += units * 40 * PIXEL;
-    }
 }

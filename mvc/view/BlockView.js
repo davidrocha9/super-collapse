@@ -1,13 +1,13 @@
 
-import { app, Graphics } from '../../display.js';
+import { app, Graphics, GAME_WIDTH, GAME_HEIGHT } from '../../display.js';
 import { PIXEL, PADDING } from '../../constants.js';
 
 export class BlockView {
     constructor(x, y, color) {
-        this.x = 10 * PIXEL + x * 40 * PIXEL;
-        this.y = 40 * PIXEL + y * 40 * PIXEL;
+        this.x = x;
+        this.y = y;
         this.color = color;
-
+        
         this.graphics = new Graphics();
         this.graphics.interactive = true;
         this.graphics.buttonMode = true;
@@ -20,20 +20,22 @@ export class BlockView {
     }
 
     draw() {
+        const XCoord = 0.0115 * GAME_WIDTH + this.x * 0.0435 * GAME_WIDTH;
+        const YCoord = 0.0435 * GAME_HEIGHT + this.y * 0.04375 * GAME_WIDTH;
         this.graphics.beginFill(this.color)
-            .drawRoundedRect(this.x + PADDING, this.y + PADDING,
-                (40 - 2 * PADDING) * PIXEL, (40 - 2 * PADDING) * PIXEL, 5)
+            .drawRoundedRect(XCoord, YCoord,
+                0.0435 * GAME_WIDTH, 0.0435 * GAME_WIDTH, 5)
             .endFill();
             
         app.stage.addChild(this.graphics);
     }
 
     updateX(units) {
-        this.graphics.x += units * 40 * PIXEL;
+        this.graphics.x += units * 0.0435 * GAME_WIDTH;
     }
 
     updateY(units) {
-        this.graphics.y += units * 40 * PIXEL;
+        this.graphics.y += units * 0.0435 * GAME_WIDTH;
     }
 
     delete() {

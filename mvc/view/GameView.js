@@ -1,5 +1,5 @@
-import { app, Graphics, PIXEL } from '../../display.js';
-import { writePlaceholder, scoreStyle, backToMenuStyle, drawLogo, gradientTexture, hudStyle, createGradientTexture, LIGHTBLACK, BACKGROUND, LIGHTYELLOW, WHITE, BLACK, RED, GREEN, BLUE, ORANGE } from '../../constants.js';
+import { app, GAME_HEIGHT, GAME_WIDTH, Graphics, PIXEL } from '../../display.js';
+import { writePlaceholder, scoreStyle, backToMenuStyle, drawIngameLogo, gradientTexture, hudStyle, createGradientTexture, LIGHTBLACK, BACKGROUND, LIGHTYELLOW, WHITE, BLACK, RED, GREEN, BLUE, ORANGE } from '../../constants.js';
 
 export class GameView {
     constructor(level, reset, exitCallback) {
@@ -28,7 +28,7 @@ export class GameView {
         const backgroundGrid = new Graphics();
         backgroundGrid
         .beginTextureFill({ texture: gradientTexture })
-        .drawRect(10 * PIXEL, 40 * PIXEL, 480 * PIXEL, 640 * PIXEL)
+        .drawRect(0.01 * GAME_WIDTH, 0.05 * GAME_HEIGHT, 0.525 * GAME_WIDTH, 0.925 * GAME_HEIGHT)
         .endFill();
 
         app.stage.addChild(backgroundGrid);
@@ -38,7 +38,7 @@ export class GameView {
 
         const gridLine = new Graphics();
         gridLine.lineStyle(2, BLACK, 1)
-            .drawRect(9*PIXEL, 40*PIXEL, 482*PIXEL, 684*PIXEL);
+            .drawRect(0.01 * GAME_WIDTH, 0.05 * GAME_HEIGHT, 0.525 * GAME_WIDTH, 0.925 * GAME_HEIGHT);
 
         app.stage.addChild(gridLine);
         this.elements.push(gridLine);
@@ -50,19 +50,19 @@ export class GameView {
 
         const hud = new Graphics();
         hud.beginFill(WHITE)
-            .drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 703*PIXEL)
+            .drawRect(0.55 * GAME_WIDTH, 0.015 * GAME_HEIGHT, 0.44 * GAME_WIDTH, 0.97 * GAME_HEIGHT)
             .endFill();
 
         const circle = new Graphics();
         circle.beginTextureFill({ texture: hudTexture })
             .lineStyle(3, LIGHTYELLOW, 1)
-            .drawCircle(130*PIXEL, 300*PIXEL, 700*PIXEL, 700*PIXEL)
+            .drawCircle(-0.15 * GAME_WIDTH, 0.25 * GAME_HEIGHT, GAME_WIDTH, 0.1 * GAME_HEIGHT)
             .endFill();
         circle.filters = [new PIXI.filters.BlurFilter(10)];
 
         const mask = new PIXI.Graphics();
         mask.beginFill(BLACK);
-        mask.drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 700*PIXEL);
+        mask.drawRect(0.55 * GAME_WIDTH, 0.0175 * GAME_HEIGHT, 0.5 * GAME_WIDTH, 0.97 * GAME_HEIGHT);
         mask.endFill();
 
         circle.mask = mask;
@@ -77,12 +77,12 @@ export class GameView {
 
         const hudLine = new Graphics();
         hudLine.lineStyle(4, LIGHTYELLOW, 1)
-            .drawRect(505*PIXEL, 20*PIXEL, 400*PIXEL, 703*PIXEL);
+            .drawRect(0.55 * GAME_WIDTH, 0.017 * GAME_HEIGHT, 0.44 * GAME_WIDTH, 0.97 * GAME_HEIGHT);
 
         app.stage.addChild(hudLine);
         this.elements.push(hudLine);
 
-        const logoElements = drawLogo(520, 35);
+        const logoElements = drawIngameLogo();
         for (const element of logoElements) {
             this.elements.push(element);
         }
@@ -90,13 +90,13 @@ export class GameView {
         const scoreRect = new Graphics();
         scoreRect.beginFill(WHITE)
             .lineStyle(3, LIGHTYELLOW, 1)
-            .drawRoundedRect(550*PIXEL, 200*PIXEL, 175*PIXEL, 50*PIXEL, 7*PIXEL)
+            .drawRoundedRect(0.59 * GAME_WIDTH, 0.3 * GAME_HEIGHT, 0.2 * GAME_WIDTH, 0.05 * GAME_HEIGHT, 0.01 * GAME_WIDTH)
             .endFill();
 
         app.stage.addChild(scoreRect);
         this.elements.push(scoreRect);
 
-        const scorePlaceholders = writePlaceholder('SCORE', 595*PIXEL, 180*PIXEL, hudStyle, 15, 1, 1);
+        const scorePlaceholders = writePlaceholder('SCORE', 0.65 * GAME_WIDTH, 0.27 * GAME_HEIGHT, hudStyle, 0.014 * GAME_WIDTH, 1, 1);
         for (const placeholder of scorePlaceholders) {
             this.elements.push(placeholder);
         }
@@ -104,13 +104,13 @@ export class GameView {
         const levelRect = new Graphics();
         levelRect.beginFill(WHITE)
             .lineStyle(3, LIGHTYELLOW, 1)
-            .drawRoundedRect(550*PIXEL, 300*PIXEL, 175*PIXEL, 50*PIXEL, 7*PIXEL)
+            .drawRoundedRect(0.59 * GAME_WIDTH, 0.4 * GAME_HEIGHT, 0.2 * GAME_WIDTH, 0.05 * GAME_HEIGHT, 0.01 * GAME_WIDTH)
             .endFill();
 
         app.stage.addChild(levelRect);
         this.elements.push(levelRect);
 
-        const levelPlaceholders = writePlaceholder('LEVEL', 595*PIXEL, 280*PIXEL, hudStyle, 15, 1, 1);
+        const levelPlaceholders = writePlaceholder('LEVEL', 0.65 * GAME_WIDTH, 0.37 * GAME_HEIGHT, hudStyle, 0.014 * GAME_WIDTH, 1, 1);
         for (const placeholder of levelPlaceholders) {
             this.elements.push(placeholder);
         }
@@ -118,18 +118,16 @@ export class GameView {
         const linesLeftRect = new Graphics();
         linesLeftRect.beginFill(WHITE)
             .lineStyle(3, LIGHTYELLOW, 1)
-            .drawRoundedRect(550*PIXEL, 400*PIXEL, 175*PIXEL, 50*PIXEL, 7*PIXEL)
+            .drawRoundedRect(0.59 * GAME_WIDTH, 0.5 * GAME_HEIGHT, 0.2 * GAME_WIDTH, 0.05 * GAME_HEIGHT, 0.01 * GAME_WIDTH)
             .endFill();
 
         app.stage.addChild(linesLeftRect);
         this.elements.push(linesLeftRect);
 
-        const linesLeftPlaceholders = writePlaceholder('LINES LEFT', 560*PIXEL, 380*PIXEL, hudStyle, 15, 1, 1);
+        const linesLeftPlaceholders = writePlaceholder('LINES LEFT', 0.615 * GAME_WIDTH, 0.47 * GAME_HEIGHT, hudStyle, 0.014 * GAME_WIDTH, 1, 1);
         for (const placeholder of linesLeftPlaceholders) {
             this.elements.push(placeholder);
         }
-
-        drawLogo();
 
         const whiteBlock = new Graphics();
         whiteBlock.beginFill(WHITE)
@@ -137,20 +135,20 @@ export class GameView {
             .endFill();
         
         this.score = new PIXI.Text("0", scoreStyle);
-        this.score.x = 621 * PIXEL;
-        this.score.y = 205 * PIXEL;
+        this.score.x = 0.6775 * GAME_WIDTH;
+        this.score.y = 0.305 * GAME_HEIGHT;
         app.stage.addChild(this.score);
         this.elements.push(this.score);
 
         this.level = new PIXI.Text(this.levelText, scoreStyle);
-        this.level.x = 625 * PIXEL;
-        this.level.y = 305 * PIXEL;
+        this.level.x = 0.6775 * GAME_WIDTH;
+        this.level.y = 0.405 * GAME_HEIGHT;
         app.stage.addChild(this.level);
         this.elements.push(this.level);
 
         this.linesleft = new PIXI.Text("100", scoreStyle);
-        this.linesleft.x = 610 * PIXEL;
-        this.linesleft.y = 405 * PIXEL;
+        this.linesleft.x = 0.665 * GAME_WIDTH;
+        this.linesleft.y = 0.505 * GAME_HEIGHT;
         app.stage.addChild(this.linesleft);
         this.elements.push(this.linesleft);
 
@@ -159,7 +157,7 @@ export class GameView {
         const exitBtn = new Graphics();
         exitBtn.beginFill(LIGHTYELLOW)
             .lineStyle(3, LIGHTYELLOW, 1)
-            .drawRoundedRect(550*PIXEL, 530*PIXEL, 175*PIXEL, 75*PIXEL, 7*PIXEL)
+            .drawRoundedRect(0.615 * GAME_WIDTH, 0.6 * GAME_HEIGHT, 0.15 * GAME_WIDTH, 0.075 * GAME_HEIGHT, 0.01 * GAME_WIDTH)
             .endFill();
 
         exitBtn.interactive = true;
@@ -172,8 +170,8 @@ export class GameView {
         this.elements.push(exitBtn);
 
         let exitBtnText = new PIXI.Text("EXIT", scoreStyle);
-        exitBtnText.x = 605 * PIXEL;
-        exitBtnText.y = 540 * PIXEL;
+        exitBtnText.x = 0.665 * GAME_WIDTH;
+        exitBtnText.y = 0.61 * GAME_HEIGHT;
         app.stage.addChild(exitBtnText);
         this.elements.push(exitBtnText);
     }
@@ -181,21 +179,21 @@ export class GameView {
     showWinScreen() {
         const whiteBlock = new Graphics();
         whiteBlock.beginFill(BACKGROUND)
-            .drawRoundedRect(130 * PIXEL, 280 * PIXEL, 240 * PIXEL, 160 * PIXEL)
+            .drawRoundedRect(0.175 * GAME_WIDTH, 0.4 * GAME_HEIGHT, 0.2 * GAME_WIDTH, 0.125 * GAME_HEIGHT)
             .endFill();
 
         app.stage.addChild(whiteBlock);
         this.elements.push(whiteBlock)
 
         let youWonPlaceholder = new PIXI.Text("YOU WON!", scoreStyle);
-        youWonPlaceholder.x = 175 * PIXEL;
-        youWonPlaceholder.y = 310 * PIXEL;
+        youWonPlaceholder.x = 0.21 * GAME_WIDTH;
+        youWonPlaceholder.y = 0.41 * GAME_HEIGHT;
         app.stage.addChild(youWonPlaceholder);
         this.elements.push(youWonPlaceholder);
 
         let nextLevelPlaceholder = new PIXI.Text("BACK TO MENU", backToMenuStyle);
-        nextLevelPlaceholder.x = 182.5 * PIXEL;
-        nextLevelPlaceholder.y = 370 * PIXEL;
+        nextLevelPlaceholder.x = 0.2325 * GAME_WIDTH;
+        nextLevelPlaceholder.y = 0.47 * GAME_HEIGHT;
         app.stage.addChild(nextLevelPlaceholder);
         this.elements.push(nextLevelPlaceholder);
 
@@ -209,9 +207,8 @@ export class GameView {
         ])
         .endFill();
 
-        arrow.x = 150 * PIXEL;
-        arrow.y = 375 * PIXEL;
-
+        arrow.x = 0.21 * GAME_WIDTH;
+        arrow.y = 0.475 * GAME_HEIGHT;
         
         app.stage.addChild(arrow);
         this.elements.push(arrow);
@@ -239,10 +236,13 @@ export class GameView {
 
     drawFallingBlock(x, y, blockColor) {
         let block = new Graphics();
+        const XCoord = 0.895 * GAME_WIDTH + x * 0.0435 * GAME_WIDTH;
+        const YCoord = 0.01 * GAME_HEIGHT + y * 0.04375 * GAME_WIDTH;
+
         block.beginFill(blockColor)
             .lineStyle(1, BLACK, 1)
-            .drawRoundedRect(x * PIXEL, (y + 50) * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
+            .drawRoundedRect(XCoord, YCoord,
+                0.0435 * GAME_WIDTH, 0.0435 * GAME_WIDTH, 5)
             .endFill();
         
         app.stage.addChild(block);
@@ -250,35 +250,35 @@ export class GameView {
     }
 
     drawFallingBlocks() {
-        this.drawFallingBlock(835, 40, GREEN);
-        this.drawFallingBlock(770, 110, WHITE);
-        this.drawFallingBlock(835, 210, BLUE);
-        this.drawFallingBlock(835, 340, GREEN);
-        this.drawFallingBlock(770, 370, RED);
-        this.drawFallingBlock(835, 475, WHITE);
-        this.drawFallingBlock(770, 520, BLUE);
-        this.drawFallingBlock(835, 540, RED);
-        this.drawFallingBlock(835, 605, GREEN);
+        this.drawFallingBlock(1, 1, GREEN);
+        this.drawFallingBlock(0, 5.5, WHITE);
+        this.drawFallingBlock(1, 7.5, BLUE);
+        this.drawFallingBlock(1, 10, GREEN);
+        this.drawFallingBlock(0, 10.5, RED);
+        this.drawFallingBlock(1, 14.5, WHITE);
+        this.drawFallingBlock(1, 15.5, BLUE);
+        this.drawFallingBlock(0, 15, RED);
+        this.drawFallingBlock(1, 16.5, GREEN);
     }
 
     showLossScreen() {
         const whiteBlock = new Graphics();
         whiteBlock.beginFill(BACKGROUND)
-            .drawRoundedRect(130 * PIXEL, 280 * PIXEL, 240 * PIXEL, 160 * PIXEL)
+            .drawRoundedRect(0.175 * GAME_WIDTH, 0.4 * GAME_HEIGHT, 0.2 * GAME_WIDTH, 0.125 * GAME_HEIGHT)
             .endFill();
 
         app.stage.addChild(whiteBlock);
         this.elements.push(whiteBlock)
 
         let youWonPlaceholder = new PIXI.Text("GAME OVER!", scoreStyle);
-        youWonPlaceholder.x = 165 * PIXEL;
-        youWonPlaceholder.y = 310 * PIXEL;
+        youWonPlaceholder.x = 0.2 * GAME_WIDTH;
+        youWonPlaceholder.y = 0.41 * GAME_HEIGHT;
         app.stage.addChild(youWonPlaceholder);
         this.elements.push(youWonPlaceholder);
 
         let nextLevelPlaceholder = new PIXI.Text("BACK TO MENU", backToMenuStyle);
-        nextLevelPlaceholder.x = 182.5 * PIXEL;
-        nextLevelPlaceholder.y = 370 * PIXEL;
+        nextLevelPlaceholder.x = 0.2325 * GAME_WIDTH;
+        nextLevelPlaceholder.y = 0.47 * GAME_HEIGHT;
         app.stage.addChild(nextLevelPlaceholder);
         this.elements.push(nextLevelPlaceholder);
 
@@ -292,8 +292,8 @@ export class GameView {
         ])
         .endFill();
 
-        arrow.x = 150 * PIXEL;
-        arrow.y = 375 * PIXEL;
+        arrow.x = 0.21 * GAME_WIDTH;
+        arrow.y = 0.475 * GAME_HEIGHT;
 
         
         app.stage.addChild(arrow);
@@ -325,22 +325,9 @@ export class GameView {
             let upcomingGrid = new Graphics();
             upcomingGrid.beginFill(LIGHTBLACK)
                 .lineStyle(3, LIGHTYELLOW, 1)
-                .drawRect(10*PIXEL + 40*i*PIXEL, 683*PIXEL, 40*PIXEL, 40*PIXEL)
+                .drawRect(0.012 * GAME_WIDTH + i * 0.0435 * GAME_WIDTH, 0.9175 * GAME_HEIGHT, 0.0435 * GAME_WIDTH, 0.0435 * GAME_WIDTH)
                 .endFill();
 
-            app.stage.addChild(upcomingGrid);
-            this.elements.push(upcomingGrid);
-        }
-    }
-
-    drawUpcomingGrid() {
-        for (let i = 0; i < 12; i++) {
-            let upcomingGrid = new Graphics();
-            upcomingGrid.beginFill(LIGHTBLACK)
-                .lineStyle(3, LIGHTYELLOW, 1)
-                .drawRect(10*PIXEL + 40*i*PIXEL, 683*PIXEL, 40*PIXEL, 40*PIXEL)
-                .endFill();
-    
             app.stage.addChild(upcomingGrid);
             this.elements.push(upcomingGrid);
         }

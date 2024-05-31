@@ -2,11 +2,13 @@
   "dependencies": {
     "eventemitter3": "^5.0.1",
     "gsap": "^3.12.2",
+    "nodemon": "^3.1.2",
     "pixi-sound": "^3.0.5",
     "pixi.js": "^7.2.4",
     "seedrandom": "^3.0.5"
   },
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "dev": "live-server"
   }
 }

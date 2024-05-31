@@ -67,7 +67,6 @@ export class Game {
 
     lineCreator() {
         const result = this.grid.addRandomBlockToList();
-
         switch (result) {
             case 1:
                 if (this.linesLeft == 0) break;

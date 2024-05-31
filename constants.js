@@ -1,4 +1,4 @@
-import { app, Graphics, PIXEL, RATIO } from './display.js';
+import { app, GAME_HEIGHT, GAME_WIDTH, Graphics, PIXEL, RATIO } from './display.js';
 
 const LIGHTBLACK = 0x484444;
 const BACKGROUND = 0xff9b00;
@@ -28,7 +28,7 @@ const hudStyle = new PIXI.TextStyle({
     dropShadowDistance: 3,
     fill: "#ffffff",
     fontFamily: "Impact, Charcoal, sans-serif",
-    fontSize: RATIO *  25,
+    fontSize: 0.03 * GAME_WIDTH,
     stroke: "#e28503",
     strokeThickness: 2
 });
@@ -40,7 +40,7 @@ const scoreStyle = new PIXI.TextStyle({
     dropShadowDistance: 3,
     fill: "#ffffff",
     fontFamily: "Impact, Charcoal, sans-serif",
-    fontSize: RATIO *  35,
+    fontSize: GAME_WIDTH * 0.03,
     stroke: "#e28503",
     strokeThickness: 2
 });
@@ -64,7 +64,7 @@ const superStyle = new PIXI.TextStyle({
     dropShadowDistance: 2,
     fill: "#fff59a",
     fontFamily: "\"Palatino Linotype\", \"Book Antiqua\", Palatino, serif",
-    fontSize: RATIO *  60,
+    fontSize: GAME_WIDTH * 0.05,
     fontStyle: "italic",
     fontWeight: "bold",
     letterSpacing: 3,
@@ -79,7 +79,7 @@ const collapseStyle = new PIXI.TextStyle({
     dropShadowColor: "#ffffff",
     fill: "#ffffff",
     fontFamily: "Arial Black",
-    fontSize: RATIO *  30,
+    fontSize: GAME_WIDTH * 0.035,
     fontWeight: "bold",
     strokeThickness: 3
 });
@@ -89,8 +89,8 @@ function writePlaceholder(text, x, y, style, spacing, x_stretch, y_stretch) {
     
     for (let i = 0; i < text.length; i++) {
         let placeholder = new PIXI.Text(text[i], style);
-        placeholder.x = x + RATIO * i * spacing;
-        placeholder.y = y - 2.5 * (1 - (i % 2));
+        placeholder.x = x + i * spacing;
+        placeholder.y = y;
         placeholder.scale.x = x_stretch;
         placeholder.scale.y = y_stretch;
         app.stage.addChild(placeholder);
@@ -131,6 +131,7 @@ function drawUpcomingGrid() {
         upcomingGrid.beginFill(LIGHTBLACK)
             .lineStyle(3, LIGHTYELLOW, 1)
             .drawRect(10*PIXEL + 40*i*PIXEL, 683*PIXEL, 40*PIXEL, 40*PIXEL)
+            0.01 * GAME_WIDTH, 0.05 * GAME_HEIGHT, 0.525 * GAME_WIDTH, 0.925 * GAME_HEIGHT
             .endFill();
 
         app.stage.addChild(upcomingGrid);
@@ -143,8 +144,8 @@ function drawLogo(x, y) {
     const whiteBlock = new Graphics();
     whiteBlock.beginFill(WHITE)
         .lineStyle(1, BLACK, 1)
-        .drawRoundedRect(x * PIXEL, (y + 15) * PIXEL,
-            60 * PIXEL, 60 * PIXEL, 5)
+        .drawRoundedRect(x - GAME_WIDTH * 0.09, y,
+            GAME_WIDTH * 0.06, GAME_WIDTH * 0.06, 5)
         .endFill();
 
     app.stage.addChild(whiteBlock);
@@ -153,8 +154,8 @@ function drawLogo(x, y) {
     const redBlock = new Graphics();
     redBlock.beginFill(RED)
         .lineStyle(1, BLACK, 1)
-        .drawRoundedRect((x + 60) * PIXEL, y * PIXEL,
-            60 * PIXEL, 60 * PIXEL, 5)
+        .drawRoundedRect(x - GAME_WIDTH * 0.03, y - GAME_WIDTH * 0.02,
+            GAME_WIDTH * 0.06, GAME_WIDTH * 0.06, 5)
         .endFill();
 
     app.stage.addChild(redBlock);
@@ -163,8 +164,8 @@ function drawLogo(x, y) {
     const greenBlock = new Graphics();
     greenBlock.beginFill(GREEN)
         .lineStyle(1, BLACK, 1)
-        .drawRoundedRect((x + 120) * PIXEL, y * PIXEL,
-            60 * PIXEL, 60 * PIXEL, 5)
+        .drawRoundedRect(x + GAME_WIDTH * 0.03, y - GAME_WIDTH * 0.01,
+            GAME_WIDTH * 0.06, GAME_WIDTH * 0.06, 5)
         .endFill();
 
     app.stage.addChild(greenBlock);
@@ -173,20 +174,20 @@ function drawLogo(x, y) {
     const blueBlock = new Graphics();
     blueBlock.beginFill(BLUE)
         .lineStyle(1, BLACK, 1)
-        .drawRoundedRect((x + 180) * PIXEL, (y + 15) * PIXEL,
-            60 * PIXEL, 60 * PIXEL, 5)
+        .drawRoundedRect(x + GAME_WIDTH * 0.09, y,
+            GAME_WIDTH * 0.06, GAME_WIDTH * 0.06, 5)
         .endFill();
 
     app.stage.addChild(blueBlock);
     elements.push(blueBlock);
 
     const superText = new PIXI.Text('Super', superStyle);
-    superText.x = (x + 40) * PIXEL;
-    superText.y = (y - 45) * PIXEL;
+    superText.x = x - 0.25 * superText.width;
+    superText.y = y - 0.9 * superText.height;
     app.stage.addChild(superText);
     elements.push(superText);
 
-    const placeholders = writePlaceholder("COLLAPSE!", (x + 20) * PIXEL, (y + 30) * PIXEL, collapseStyle, 22.5, 1, 1.75);
+    const placeholders = writePlaceholder("COLLAPSE!", x - 0.07 * GAME_WIDTH, y + GAME_WIDTH * 0.01, collapseStyle, GAME_WIDTH * 0.0225, 1, 1);
 
     for (const placeholder of placeholders) {
         placeholder.scale.y = 2.25;
@@ -196,17 +197,77 @@ function drawLogo(x, y) {
     return elements;
 }
 
+function drawIngameLogo(x, y) {
+    const elements = [];
+
+    const whiteBlock = new Graphics();
+    whiteBlock.beginFill(WHITE)
+        .lineStyle(1, BLACK, 1)
+        .drawRoundedRect(GAME_WIDTH * 0.57, GAME_HEIGHT * 0.1,
+            GAME_WIDTH * 0.06, GAME_WIDTH * 0.06, 5)
+        .endFill();
+
+    app.stage.addChild(whiteBlock);
+    elements.push(whiteBlock);
+
+    const redBlock = new Graphics();
+    redBlock.beginFill(RED)
+        .lineStyle(1, BLACK, 1)
+        .drawRoundedRect(GAME_WIDTH * 0.63, GAME_HEIGHT * 0.08,
+            GAME_WIDTH * 0.06, GAME_WIDTH * 0.06, 5)
+        .endFill();
+
+    app.stage.addChild(redBlock);
+    elements.push(redBlock);
+
+    const greenBlock = new Graphics();
+    greenBlock.beginFill(GREEN)
+        .lineStyle(1, BLACK, 1)
+        .drawRoundedRect(GAME_WIDTH * 0.69, GAME_HEIGHT * 0.1,
+            GAME_WIDTH * 0.06, GAME_WIDTH * 0.06, 5)
+        .endFill();
+
+    app.stage.addChild(greenBlock);
+    elements.push(greenBlock);
+
+    const blueBlock = new Graphics();
+    blueBlock.beginFill(BLUE)
+        .lineStyle(1, BLACK, 1)
+        .drawRoundedRect(GAME_WIDTH * 0.75, GAME_HEIGHT * 0.12,
+            GAME_WIDTH * 0.06, GAME_WIDTH * 0.06, 5)
+        .endFill();
+
+    app.stage.addChild(blueBlock);
+    elements.push(blueBlock);
+
+    const superText = new PIXI.Text('Super', superStyle);
+    superText.x = 0.625 * GAME_WIDTH;
+    superText.y = 0.04 * GAME_HEIGHT;
+    app.stage.addChild(superText);
+    elements.push(superText);
+
+    const placeholders = writePlaceholder("COLLAPSE!", 0.595 * GAME_WIDTH, 0.125 * GAME_HEIGHT, collapseStyle, GAME_WIDTH * 0.0225, 1, 1);
+
+    for (const placeholder of placeholders) {
+        placeholder.scale.y = 2.25;
+        elements.push(placeholder);
+    }
+
+    return elements;
+}
+
+
 function drawBlocks() {
     const elements = [];
 
     for (let x = 0; x < 24; x++) {
         for (let y = 0; y < 19; y++) {
-            if (x > 6 && x < 16 && y > 2 && y < 15) continue;
+            if (x > 6 && x < 17 && y > 3 && y < 15) continue;
             let block = new Graphics();
             block.beginFill(COLORS[Math.floor(rng() * 1000 % 3) + 1])
                 .lineStyle(1, BLACK, 1)
-                .drawRoundedRect(x * 40 * PIXEL, y * 40 * PIXEL - 10 * PIXEL,
-                    40 * PIXEL, 40 * PIXEL, 5)
+                .drawRoundedRect(x + GAME_WIDTH * 0.0412 * x, y + GAME_WIDTH * 0.0412 * y,
+                    GAME_WIDTH * 0.0412, GAME_WIDTH * 0.0412, 2)
                 .endFill();
 
             const blurFilter = new PIXI.filters.BlurFilter();
@@ -224,6 +285,6 @@ function drawBlocks() {
 export { PIXEL, PADDING, COLORS, rng,
     hudStyle, scoreStyle, backToMenuStyle, superStyle,
     collapseStyle, writePlaceholder, createGradientTexture, gradientTexture,
-    drawUpcomingGrid, drawLogo, drawBlocks, LIGHTBLACK,
+    drawUpcomingGrid, drawLogo, drawIngameLogo, drawBlocks, LIGHTBLACK,
     BACKGROUND, LIGHTYELLOW, WHITE, BLACK,
     RED, GREEN, BLUE, ORANGE };

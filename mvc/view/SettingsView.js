@@ -1,4 +1,4 @@
-import { app, PIXEL } from '../../display.js';
+import { app, PIXEL, GAME_WIDTH, GAME_HEIGHT } from '../../display.js';
 import { scoreStyle, drawLogo, drawBlocks  } from '../../constants.js';
 
 
@@ -10,15 +10,15 @@ export class SettingsView {
     }
 
     draw() {
-        const logoElements = drawLogo(340, 225);
+        const logoElements = drawLogo(0.475 * GAME_WIDTH, 0.325 * GAME_HEIGHT);
         
         for (const element of logoElements) {
             this.settingsElements.push(element);
         }
 
         let easy = new PIXI.Text("EASY", scoreStyle);
-        easy.x = 425 * PIXEL;
-        easy.y = 380 * PIXEL;
+        easy.x = 0.5 * GAME_WIDTH - easy.width / 2;
+        easy.y = 0.5 * GAME_HEIGHT;
         app.stage.addChild(easy);
         this.settingsElements.push(easy);
 
@@ -35,8 +35,8 @@ export class SettingsView {
         });
 
         let medium = new PIXI.Text("MEDIUM", scoreStyle);
-        medium.x = 400 * PIXEL;
-        medium.y = 440 * PIXEL;
+        medium.x = 0.5 * GAME_WIDTH - medium.width / 2;
+        medium.y = 0.575 * GAME_HEIGHT;
         app.stage.addChild(medium);
         this.settingsElements.push(medium);
 
@@ -53,8 +53,8 @@ export class SettingsView {
         });
 
         let hard = new PIXI.Text("HARD", scoreStyle);
-        hard.x = 420 * PIXEL;
-        hard.y = 500 * PIXEL;
+        hard.x = 0.5 * GAME_WIDTH - hard.width / 2;
+        hard.y = 0.65 * GAME_HEIGHT;
         app.stage.addChild(hard);
         this.settingsElements.push(hard);
 

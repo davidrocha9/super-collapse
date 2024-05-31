@@ -5,10 +5,10 @@ import { GridElement } from './GridElement.js';
 export class Bomb extends GridElement {
     constructor(x, y, color, clickCallback) {
         const model = new BombModel(x, y, color);
-        const view = new BombView(model);
+        const view = new BombView(x, y, color);
         super(model, view, clickCallback);
         
-        this.view.circleGraphics.on('pointerdown', () => {
+        this.view.graphics.on('pointerdown', () => {
             this.handleClick(this.model.x, this.model.y);
         });
     }
@@ -18,8 +18,8 @@ export class Bomb extends GridElement {
             this.view.getGraphics().parent.removeChild(this.view.getGraphics());
         }
 
-        if (this.view.getCircleGraphics().parent) {
-            this.view.getCircleGraphics().parent.removeChild(this.view.getCircleGraphics());
+        if (this.view.getGraphics().parent) {
+            this.view.getGraphics().parent.removeChild(this.view.getGraphics());
         }
     }
 }

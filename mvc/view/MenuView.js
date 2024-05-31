@@ -1,4 +1,4 @@
-import { app, Graphics, PIXEL } from '../../display.js';
+import { app, GAME_HEIGHT, GAME_WIDTH, Graphics, PIXEL, PIXEL_WIDTH } from '../../display.js';
 import { scoreStyle, drawLogo, drawBlocks, BLACK, BLUE, BACKGROUND  } from '../../constants.js';
 
 export class MenuView {
@@ -10,24 +10,15 @@ export class MenuView {
     }
     
     draw() {
-        const background = new Graphics();
-        background
-        .beginFill(BACKGROUND)
-        .lineStyle(1, BLACK, 1)
-        .drawRect(282 * PIXEL, 112 * PIXEL, 358 * PIXEL, 478 * PIXEL)
-        .endFill();
-
-        app.stage.addChild(background);
-
-        const logoElements = drawLogo(340, 225);
+        const logoElements = drawLogo(0.475 * GAME_WIDTH, 0.325 * GAME_HEIGHT);
         
         for (const element of logoElements) {
             this.menuElements.push(element);
         }
 
         let play = new PIXI.Text("PLAY", scoreStyle);
-        play.x = 425 * PIXEL;
-        play.y = 400 * PIXEL;
+        play.x = 0.5 * GAME_WIDTH - play.width / 2;
+        play.y = 0.5 * GAME_HEIGHT;
         app.stage.addChild(play);
         this.menuElements.push(play);
 
@@ -44,8 +35,8 @@ export class MenuView {
         });
 
         let settings = new PIXI.Text("SETTINGS", scoreStyle);
-        settings.x = 390 * PIXEL;
-        settings.y = 460 * PIXEL;
+        settings.x = 0.5 * GAME_WIDTH - settings.width / 2;
+        settings.y = 0.575 * GAME_HEIGHT;
         app.stage.addChild(settings);
         this.menuElements.push(settings);
 
@@ -60,16 +51,6 @@ export class MenuView {
 
             this.showSettingsCallback();
         });
-
-        let blueBlock = new Graphics();
-        blueBlock.beginFill(BLUE)
-            .lineStyle(1, BLACK, 1)
-            .drawRoundedRect(0 * PIXEL, 0 * PIXEL,
-                60 * PIXEL, 60 * PIXEL, 5)
-            .endFill();
-
-        app.stage.addChild(blueBlock);
-        this.menuElements.push(blueBlock);
 
         const blocks = drawBlocks();
         for (const block of blocks) {

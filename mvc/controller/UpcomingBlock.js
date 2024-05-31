@@ -4,7 +4,7 @@ import { UpcomingBlockView } from '../view/UpcomingBlockView.js';
 export class UpcomingBlock {
     constructor(x, y, color) {
         this.model = new UpcomingBlockModel(x, y, color);
-        this.view = new UpcomingBlockView(this.model);
+        this.view = new UpcomingBlockView(x, y, color);
     }
 
     delete() {
