@@ -1,5 +1,5 @@
-import { app, GAME_HEIGHT, GAME_WIDTH, Graphics, PIXEL } from '../../display.js';
-import { writePlaceholder, scoreStyle, backToMenuStyle, drawIngameLogo, gradientTexture, hudStyle, createGradientTexture, LIGHTBLACK, BACKGROUND, LIGHTYELLOW, WHITE, BLACK, RED, GREEN, BLUE, ORANGE } from '../../constants.js';
+import { app, GAME_HEIGHT, GAME_WIDTH, Graphics, PIXEL } from '../constants/display.js';
+import { writePlaceholder, scoreStyle, backToMenuStyle, drawIngameLogo, gradientTexture, hudStyle, createGradientTexture, LIGHTBLACK, BACKGROUND, LIGHTYELLOW, WHITE, BLACK, RED, GREEN, BLUE, ORANGE } from '../constants/constants.js';
 
 export class GameView {
     constructor(level, reset, exitCallback) {

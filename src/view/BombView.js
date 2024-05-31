@@ -1,8 +1,8 @@
 
-import { app, Graphics, GAME_WIDTH, GAME_HEIGHT } from '../../display.js';
-import { PIXEL, PADDING } from '../../constants.js';
+import { app, Graphics, GAME_WIDTH, GAME_HEIGHT } from '../constants/display.js';
+import { PIXEL } from '../constants/constants.js';
 
-export class BlockView {
+export class BombView {
     constructor(x, y, color) {
         this.x = x;
         this.y = y;
@@ -20,11 +20,11 @@ export class BlockView {
     }
 
     draw() {
-        const XCoord = 0.0115 * GAME_WIDTH + this.x * 0.0435 * GAME_WIDTH;
-        const YCoord = 0.0435 * GAME_HEIGHT + this.y * 0.04375 * GAME_WIDTH;
+        const XCoord = 0.0325 * GAME_WIDTH + this.x * 0.0435 * GAME_WIDTH;
+        const YCoord = 0.07 * GAME_HEIGHT + this.y * 0.04375 * GAME_WIDTH;
         this.graphics.beginFill(this.color)
-            .drawRoundedRect(XCoord, YCoord,
-                0.0435 * GAME_WIDTH, 0.0435 * GAME_WIDTH, 5)
+            .drawCircle(XCoord, YCoord,
+                0.0215 * GAME_WIDTH)
             .endFill();
             
         app.stage.addChild(this.graphics);

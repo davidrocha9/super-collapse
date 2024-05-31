@@ -1,5 +1,5 @@
-import { app, Graphics, GAME_WIDTH, GAME_HEIGHT } from '../../display.js';
-import { PIXEL, BLACK } from '../../constants.js';
+import { app, Graphics, GAME_WIDTH, GAME_HEIGHT } from '../constants/display.js';
+import { PIXEL, BLACK } from '../constants/constants.js';
 
 export class UpcomingBlockView {
     constructor(x, y, color) {

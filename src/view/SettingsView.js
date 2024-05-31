@@ -1,5 +1,5 @@
-import { app, PIXEL, GAME_WIDTH, GAME_HEIGHT } from '../../display.js';
-import { scoreStyle, drawLogo, drawBlocks  } from '../../constants.js';
+import { app, PIXEL, GAME_WIDTH, GAME_HEIGHT } from '../constants/display.js';
+import { scoreStyle, drawLogo, drawBlocks  } from '../constants/constants.js';
 
 
 export class SettingsView {

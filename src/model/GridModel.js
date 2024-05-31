@@ -1,6 +1,6 @@
 import { Block } from '../controller/Block.js';
 import { Bomb } from '../controller/Bomb.js';
-import { COLORS, rng } from '../../constants.js';
+import { COLORS, rng } from '../constants/constants.js';
 
 export class GridModel {
     constructor(handleBlock, handleBomb) {

@@ -1,4 +1,4 @@
-import { COLORS, rng, BLACK } from '../../constants.js';
+import { COLORS, rng, BLACK } from '../constants/constants.js';
 import { Block } from './Block.js';
 import { UpcomingBlock } from './UpcomingBlock.js';
 import { GridModel } from '../model/GridModel.js';

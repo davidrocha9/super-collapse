@@ -1,5 +1,5 @@
-import { app, GAME_HEIGHT, GAME_WIDTH, Graphics, PIXEL, PIXEL_WIDTH } from '../../display.js';
-import { scoreStyle, drawLogo, drawBlocks, BLACK, BLUE, BACKGROUND  } from '../../constants.js';
+import { app, GAME_HEIGHT, GAME_WIDTH, Graphics, PIXEL, PIXEL_WIDTH } from '../constants/display.js';
+import { scoreStyle, drawLogo, drawBlocks, BLACK, BLUE, BACKGROUND  } from '../constants/constants.js';
 
 export class MenuView {
     constructor(startNewGameCallback, showSettingsCallback) {
